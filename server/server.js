@@ -4,10 +4,16 @@ const { createServer } = require('node:http');
 const app = express();
 const server = createServer(app);
 
+const users = []
+
 app.get('/', (req, res) => {
     res.send('API connected');
-  });
-  
+});
+
+app.get('/users', (req, res) => {
+    res.json(users)
+})
+
 //Run Server -------------------------------------------------
 const PORT = 4000; 
 const SERVER_IP = "localhost"; 
