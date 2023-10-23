@@ -1,8 +1,84 @@
+* {
+  font-family: Poppins, sans-serif;
+}
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 393px;
+  height: 961px;
+  background: #FFFDFD;
+  font-family: Poppins, sans-serif;
+}
+
+.header {
+  background-color: #392061;
+  width: 393px;
+  height: 110px;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.header > h1 {
+  color: #FFFDFD;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  justify-content: center;
+  padding-top: 52px;
+  flex-grow: 1;
+  width: 33%;
+}
+
+.profile {
+  width: 30px;
+  height: 30px;
+  padding-top: 35px;
+  padding-left: 10px;
+}
+
+.banner {
+  width: 353px;
+  height: 350px;
+  border: 1px solid #C8D0CE;
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  margin: 20px;
+}
+
+.my-bulb {
+  width: 167px;
+  height: 70px;
+  margin: 20px;
+  border-radius: 15px;
+  border: 1px solid #C8D0CE;
+  background: #FFFDFD;
+  display: flex;
+}
+
+.my-bulb > .bulb-icon {
+  width: 42px;
+  height: 42px;
+  padding-left: 18px;
+  padding-top: 13px;
+  padding-bottom: 15px;
+}
+
+.my-bulb > h3 {
+  color: #1A1B25;
+  font-size: 12px;
+  font-style: normal;
+  padding-left: 15px;
+}
+
+.category {
+  margin: 20px;
+}
+
+h2 {
+  font-size: 20px;
 }
 
 .logo {
