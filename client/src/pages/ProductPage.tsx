@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
-import productImageA from '../assets/product-cush.png'; // Assuming you have a sample image for now
+import productImageA from '../assets/product-cush.png';
 
 const products = Array(7).fill({
   id: 1, 
