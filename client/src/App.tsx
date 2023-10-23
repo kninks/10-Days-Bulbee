@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css'
-import Description from './pages/Description';
-import Summary from './pages/Summary';
+import Description from './pages/Description/Description';
+import Summary from './pages/Summary/Summary';
 
 function App() {
   return (
