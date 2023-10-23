@@ -1,4 +1,5 @@
 import React from 'react'
+import Category from '../components/Category'
 
 const Home = () => {
   return (
@@ -23,6 +24,7 @@ const Home = () => {
       </div>
       <div className='category'>
         <h2>Browse Category</h2>
+        <Category />
       </div>
     </div>
   )
