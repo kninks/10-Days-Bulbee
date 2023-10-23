@@ -13,6 +13,12 @@ const Home = () => {
         <div className='my-bulb'>
           <img src='/light-bulb.png' className='bulb-icon' />
           <h3>Balance</h3>
+          <h2>10,000</h2>
+        </div>
+        <div className='my-purchase'>
+          <img src='/shopping-bag.png' className='bag-icon' />
+          <h2 className='text1'>My</h2>
+          <h2 className='text2'>Purchase</h2>
         </div>
       </div>
       <div className='category'>
