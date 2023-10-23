@@ -11,7 +11,7 @@ const Description = () => {
   const product = {
     name: 'Oh My Tint',   
     id: 'd80729a5-c736-4d50-8fec-c961c2ce5057',   
-    description: 'OH MY TINT โฉมใหม่ล่าสุด 💋ลิปเนื้อละมุนในตำนานกลับมาอีก    กครั้งแต่ราคาน่ารักเหมือนเดิม',
+    description: 'OH MY TINT โฉมใหม่ล่าสุด 💋ลิปเนื้อละมุนในตำนานกลับมาอีก ครั้งแต่ราคาน่ารักเหมือนเดิม',
     category: 'Beauty',   
     picture_url: '',      
     bulb_price: 99,       
@@ -47,10 +47,11 @@ const Description = () => {
       <div className='product-title'>
         {product.name}
       </div>
-      <div className='bulub-orice'>
+      <div className='bulb-price'>
         {product.bulb_price}
       </div>
       <div className='product-description'>
+        <p className='description-text'>Description</p>
         {product.description}
       </div>
       <div className='product-quantity'>

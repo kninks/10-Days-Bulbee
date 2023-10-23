@@ -16,3 +16,36 @@
     line-height: normal;
     text-decoration-line: underline;
 }
+
+.order-summary {
+    color: #1A1B25;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.input-code {
+    width: 252px;
+    height: 30px;
+    flex-shrink: 0;
+    fill: #FFFDFD;
+    stroke-width: 1px;
+    stroke: #C8D0CE;
+}
+
+.apply-button {
+    width: 71.575px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: #392061;
+
+    color: #FFF;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

@@ -17,6 +17,33 @@
     text-decoration-line: underline;
 }
 
+.product-title {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: flex;
+}
+
+.description-text {
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+}
+
+.bulb-price {
+    color: #000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: flex;
+}
+
 .product-quantity {
     display: flex;
     align-items: center;
@@ -34,6 +61,7 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+    justify-content: space-between;
     width: 166px;
     height: 40px;
     flex-shrink: 0;

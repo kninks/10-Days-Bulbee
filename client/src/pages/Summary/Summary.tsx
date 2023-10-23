@@ -5,7 +5,13 @@ const Summary = () => {
   return (
     <div>
       <Link to ='/description' className='back-link'>Back</Link>
-      <h1>Order Summary</h1>
+      <div className='order-summary'>
+        Order Summary
+      </div>
+      <div>
+        <input className='input-code'></input>
+        <button className='apply-button'>Apply</button>
+      </div>
     </div>
   )
 }
