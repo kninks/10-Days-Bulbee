@@ -14,9 +14,9 @@ app.get('/', (req, res) => {
     console.log('API connected')
   });
 
-// const products_routes = require('./routes/products.route')
+const products_routes = require('./routes/products.route')
 
-// app.use('/products', products_routes)
+app.use('/products', products_routes)
 
 //Run Server -------------------------------------------------
 const PORT = 4000; 
