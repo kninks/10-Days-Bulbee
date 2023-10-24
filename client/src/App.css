@@ -78,10 +78,18 @@
   position: absolute;
 }
 
+.category-header {
+  margin: 20px;
+}
 
+.category-section {
+  margin: 20px;
+}
 
-h2 {
-  font-size: 20px;
+.category {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
 }
 
 .logo {
