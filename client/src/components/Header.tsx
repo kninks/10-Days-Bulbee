@@ -1,4 +1,5 @@
 import React from 'react'
+import "../App.css"
 
 const Header = () => {
   return (
@@ -6,7 +7,13 @@ const Header = () => {
       <div className="profile">
         <img src="/profile-icon.svg" className="profile" />
       </div>
-      <h1>Bulbee</h1>
+      <div className='bulbee-logo'>
+        <p>Bulbee</p>
+      </div>
+      <div className='bulb-balance-top'>
+        <img src='/light-bulb.png' className='balance-top-img' />
+        <p>10,000</p>
+      </div>
     </div>
   );
 }

@@ -11,7 +11,7 @@
 .header {
   background-color: #392061;
   width: 393px;
-  height: 60px;
+  height: 67px;
   display: grid;
   grid-auto-rows: 1fr;
   grid-template-columns: 1fr 1fr 1fr;
@@ -19,7 +19,7 @@
   top: 0;
 }
 
-.header > h1 {
+/* .header > h1 {
   color: #FFFDFD;
   font-size: 24px;
   font-style: normal;
@@ -29,13 +29,46 @@
   padding-left: 25px;
   flex-grow: 1;
   width: 33%;
+} */
+
+.bulbee-logo {
+  color: #FFFDFD;
+  font-size: 24px;
+  font-weight: 700;
+  justify-content: center;
+  margin-left: 24px;
 }
 
 .profile {
   width: 30px;
   height: 30px;
-  padding-top: 9px;
-  padding-left: 10px;
+  margin-top: 14px;
+  margin-left: 10px;
+}
+
+.bulb-balance-top {
+  width: 93px;
+  height: 30px;
+  background-color: #FFFDFD;
+  border-radius: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.balance-top-img {
+  width: 18px;
+  height: 18px;
+  margin-left: 12px;
+}
+
+.bulb-balance-top > p {
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 5px;
+  margin-top: 15px;
 }
 
 .banner {
