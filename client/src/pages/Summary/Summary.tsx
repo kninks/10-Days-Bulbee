@@ -11,17 +11,18 @@ const Summary = () => {
   
 
   const handleSubmit = async () => {
+    const sid = '6411111121';
     try {
       const response = await fetch('http://localhost:4000/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ textData })
+        body: JSON.stringify({ textData, sid })
       });
 
       if (response.ok) {
-        console.log('Discount applied successfully', textData)
+        console.log('Discount Applied')
       }
     } catch (error) {
       console.error('Error sending text data:', error);

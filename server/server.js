@@ -17,13 +17,9 @@ app.get('/', (req, res) => {
   });
 
 const products_routes = require('../server/routes/products.route')
+const info_routes = require('../server/routes/info.route')
 app.use('/products', products_routes)
-
-app.post('/submit', (req, res) => {
-  const textData = req.body.textData;
-  console.log('Discount applied', textData);
-  res.json({ message: 'Text data received'})
-})
+app.use(info_routes)
 
 //Run Server -------------------------------------------------
 const PORT = 4000; 
