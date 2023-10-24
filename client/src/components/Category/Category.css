@@ -1,0 +1,27 @@
+.category {
+    margin: 20px;
+  }
+  
+  .category > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    justify-content: center;
+  }
+  
+  .category-box {
+    width: 167px;
+    height: 129px;
+    border-radius: 15px;
+    border: 1px solid #C8D0CE;
+    background: #FFFDFD;
+    display: flex;
+    position: relative;
+  }
+
+  .text-area {
+    width: 167px;
+    height: 40px;
+    border-top: 1px solid #C8D0CE;
+    margin-top: 89px;
+  }
