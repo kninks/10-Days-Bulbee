@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './Description.css';
+import Header from '../../components/Header/Header';
 
 const Description = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const Description = () => {
       </div>
       <div className='bulb-price'>
         {product.bulb_price}
+        <img src='light-bulb.png' className='bulb-png'/>
       </div>
       <div className='product-description'>
         <p className='description-text'>Description</p>

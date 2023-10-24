@@ -1,5 +1,10 @@
 const route = require('express').Router();
-const { add_product, get_product } = require('../controllers/products')
+const multer = require('multer')
+const fs = require('fs')
+const { add_product, get_product, saveImageToMongoDB } = require('../controllers/products')
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 route.post('/add', async (req, res) => {
     try {
@@ -18,6 +23,19 @@ route.get('/get', async (req, res) => {
         return res.json(_out)
     } catch(error) {
         return res.json({ status: false, message: error });
+    }
+})
+
+route.post('/upload', upload.single('image'), async (req, res) => {
+    // const imagePath = "C:\Users\User\Downloads\B0059009.png"
+    // const imageBuffer = fs.readFileSync(imagePath)
+    const imageBuffer = req.file.buffer;
+
+    try {
+        const insertedId = await saveImageToMongoDB(req.app.locals.mongoClient, imageBuffer);
+        res.json({ message: 'Image uploaded successfully', imageId: insertedId });
+    } catch(error) {
+        res.json({ status: false, message: error });
     }
 })
 
