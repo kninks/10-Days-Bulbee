@@ -1,4 +1,8 @@
 import React, { ChangeEvent, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+
+import './Auth.css'
 
 interface FormData {
     sid: string;
@@ -10,7 +14,7 @@ async function LoginReq({ sid, password }: FormData): Promise<any> {
     console.log(credentials);
 
     try {
-        const response = await fetch('http://127.0.0.1:4000/users/login' , {
+        const response = await fetch('http://127.0.0.1:4000/auth/login' , {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -23,6 +27,7 @@ async function LoginReq({ sid, password }: FormData): Promise<any> {
         }
 
         const data = await response.json();
+        console.log("data")
         console.log(data)
         return data;
 
@@ -37,6 +42,8 @@ function Login() {
         sid: "",
         password: "",
     });
+    const [_, setCookies] = useCookies(["access_token"]);
+    const navigate = useNavigate();
 
     const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -51,7 +58,15 @@ function Login() {
 
         try {
             const response = await LoginReq(formData);
-            console.log(response);
+            console.log(response)
+            // if ("access_token" in response) {
+            //     setCookies("access_token", response.token);
+            //     window.localStorage.setItem("sid", response.sid);
+            //     navigate("/home")
+            // } else {
+            //     console.log(response);
+            // }
+            
       
             // if ('accessToken' in response) {
             //   alert(`Access allowed! ${response.accessToken}`);
@@ -61,39 +76,43 @@ function Login() {
             //   alert("Could not find your account. Sign up to create a new account.");
             // }
         } catch (error) {
-            console.error('Error:', error);
+            console.error(error);
             // Handle error state here
         }
     }
     return (
         <div>
-            <h1>Bulbee</h1>
-            <h2>Sign in</h2>
+            <div className='bulbee'>Bulbee</div>
+            <div className='auth-title'>Sign in</div>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <p>student id</p>
-                    <input
-                        type="text"
-                        name="sid"
-                        value={formData.sid}
-                        onChange={handleFormChange}
-                        placeholder="Enter your student is"
-                    />
-                    <p>password</p>
-                    <input
-                        type="text" // "password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleFormChange}
-                        placeholder="Enter your password"
-                    />
-                    <p></p>
-                    <button 
-                        type="submit"
-                    >
-                        Log in
-                    </button>
-                    <p>Register for an account</p>
+                <div className='form-card'>
+                    <div>
+                        <label htmlFor="sid" className='auth-text-field-label'>Student ID</label>
+                        <input
+                            type="text"
+                            name="sid"
+                            value={formData.sid}
+                            onChange={handleFormChange}
+                            placeholder="Enter your student is"
+                            className='auth-text-field'
+                            required
+                        />
+                    </div>
+                    
+                    <div>
+                        <label htmlFor='password' className='auth-text-field-label'>Password</label>
+                        <input
+                            type="text" // "password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleFormChange}
+                            placeholder="Enter your password"
+                            className='auth-text-field'
+                            required
+                        />
+                    </div>
+                    <button type="submit" className='submit-button'>Log in</button>
+                    <Link to='/register' className='redirect-text'>Register for an account</Link>
                 </div>
             </form>
 

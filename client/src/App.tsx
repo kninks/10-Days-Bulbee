@@ -8,7 +8,7 @@ import Home from './pages/Home'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/home",
     element: <Home />,
   },
   {

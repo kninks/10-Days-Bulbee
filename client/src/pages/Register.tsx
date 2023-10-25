@@ -1,20 +1,23 @@
 import React, { ChangeEvent, useState } from 'react'
+import { Link } from 'react-router-dom';
+
+import './Auth.css'
 
 interface FormData {
-    firstName: string;
-    lastName: string;
-    address: string;
-    postalCode: string;
+    first_name: string;
+    last_name: string;
     sid: string;
+    address: string;
+    postal_code: string;
     password: string;
 }
 
-async function RegisterReq({ firstName, lastName, address, postalCode, sid, password }: FormData) : Promise<any> {
-    const req = {firstName, lastName, address, postalCode, sid, password}
+async function RegisterReq({ first_name, last_name, address, postal_code, sid, password }: FormData) : Promise<any> {
+    const req = { first_name, last_name, sid, address, postal_code, password }
     console.log(req)
 
     try {
-        const response = await fetch('http://127.0.0.1:4000/users/register' , {
+        const response = await fetch('http://127.0.0.1:4000/auth/register' , {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,11 +39,11 @@ async function RegisterReq({ firstName, lastName, address, postalCode, sid, pass
 
 function Register() {
     const [formData, setFormData] = useState<FormData>({
-        firstName: "",
-        lastName: "",
-        address: "",
-        postalCode: "",
+        first_name: "",
+        last_name: "",
         sid: "",
+        address: "",
+        postal_code: "",
         password: "",
     });
     
@@ -66,69 +69,78 @@ function Register() {
 
   return (
     <div>
-            <h1>Bulbee</h1>
-            <h2>Create Account</h2>
-            <form onSubmit={handleSubmit}>
+        <div className='bulbee'>Bulbee</div>
+        <div className='auth-title'>Create an Account</div>
+        <form onSubmit={handleSubmit}>
+            <div className='form-card'>
                 <div>
-                    <p>First Name</p>
+                    <label htmlFor="first_name" className='auth-text-field-label'>First Name</label>
                     <input
                         type="text"
-                        name="firstName"
-                        value={formData.firstName}
+                        name="first_name"
+                        value={formData.first_name}
                         onChange={handleFormChange}
                         placeholder="Enter your first name"
+                        className='auth-text-field'
                     />
-
-                    <p>Last Name</p>
+                </div>
+                <div>
+                    <label htmlFor="last_name" className='auth-text-field-label'>Last Name</label>
                     <input
                         type="text"
-                        name="lastName"
-                        value={formData.lastName}
+                        name="last_name"
+                        value={formData.last_name}
                         onChange={handleFormChange}
                         placeholder="Enter your last name"
+                        className='auth-text-field'
                     />
-
-                    <p>student id</p>
+                </div>
+                <div>
+                    <label htmlFor="sid" className='auth-text-field-label'>Student ID</label>
                     <input
                         type="text"
                         name="sid"
                         value={formData.sid}
                         onChange={handleFormChange}
+                        className='auth-text-field'
                     />
-                    
-                    <p>Address</p>
+                </div>
+                <div>
+                    <label htmlFor="address" className='auth-text-field-label'>Address</label>
                     <input
                         type="text"
                         name="address"
                         value={formData.address}
                         onChange={handleFormChange}
+                        className='auth-text-field'
+                        // style={height: 300px}
                     />
-
-                  <p>Postal Code</p>
+                </div>
+                <div>
+                    <label htmlFor="postal_code" className='auth-text-field-label'>Postal Code</label>
                     <input
                         type="text"
-                        name="postalCode"
-                        value={formData.postalCode}
+                        name="postal_code"
+                        value={formData.postal_code}
                         onChange={handleFormChange}
+                        className='auth-text-field'
                     />
-
-                    <p>password</p>
+                </div>
+                <div>
+                    <label htmlFor='password' className='auth-text-field-label'>Password</label>
                     <input
                         type="text" // "password"
                         name="password"
                         value={formData.password}
                         onChange={handleFormChange}
-                        placeholder="Enter your name"
+                        className='auth-text-field'
                     />
-                    <p></p>
-
-                    <button type="submit">Log in</button>
-                    <p>Already have an account? Log in here</p>
                 </div>
-            </form>
-
-            
-        </div>
+                <button type="submit" className='submit-button' >Register</button>
+                <Link to='/login' className='redirect-text'>Already have an account? Log in here</Link>
+            </div>
+        </form>  
+    </div>
   )
 }
 
