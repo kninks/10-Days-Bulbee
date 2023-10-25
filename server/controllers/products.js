@@ -1,17 +1,17 @@
-const { MongoClient, ObjectId } = require('mongodb')
+import { MongoClient } from 'mongodb';
 const url = 'mongodb+srv://bupbee:bulbeepassword@bulbeedb.oqjikje.mongodb.net/?retryWrites=true&w=majority'
 const client = new MongoClient(url)
-const { v4: uuidv4 } = require('uuid');
+import { UUID } from 'mongodb';
 client.connect();
 
-async function add_product(req) {
+export async function add_product(req) {
     try {
         const database = client.db('productsDB');
         const col = database.collection('product');
 
         const product = await col.insertOne({
             name: req.name,
-            id: uuidv4(),
+            id: UUID,
             description: req.description,
             category: req.category,
             picture_url: req.picture_url,
@@ -25,7 +25,7 @@ async function add_product(req) {
     }
 }
 
-async function get_product(req) {
+export async function get_product(req) {
     try {
         const database = client.db('productsDB');
         const col = database.collection('product');
@@ -39,7 +39,7 @@ async function get_product(req) {
     }
 }
 
-async function saveImageToMongoDB(imageBuffer) {
+export async function saveImageToMongoDB(imageBuffer) {
     try {
         const database = client.db('productsDB');
         const col = database.collection('imageTest');
@@ -53,5 +53,3 @@ async function saveImageToMongoDB(imageBuffer) {
         return { status: false, result: error}
     }
 }
-
-module.exports = { add_product, get_product, saveImageToMongoDB }

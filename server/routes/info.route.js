@@ -1,5 +1,6 @@
-const route = require('express').Router();
-const { insert_discount, discount_code } = require('../controllers/info')
+import express from 'express';
+const route = express.Router();
+import { insert_discount, discount_code } from '../controllers/info.js'
 
 route.post('/insert', (req, res) => {
     try {
@@ -21,4 +22,4 @@ route.post('/submit', (req, res) => {
     }
   })
 
-  module.exports = route;
+export default route;

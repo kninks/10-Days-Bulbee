@@ -1,7 +1,8 @@
-const route = require('express').Router();
-const multer = require('multer')
-const fs = require('fs')
-const { add_product, get_product, saveImageToMongoDB } = require('../controllers/products')
+import express from 'express';
+const route = express.Router();
+import multer from 'multer';
+import fs from 'fs'
+import { add_product, get_product, saveImageToMongoDB } from '../controllers/products.js';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -39,4 +40,4 @@ route.post('/upload', upload.single('image'), async (req, res) => {
     }
 })
 
-module.exports = route;
+export default route;
