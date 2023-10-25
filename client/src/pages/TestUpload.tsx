@@ -1,48 +1,59 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+
+interface ImageUploadParams {
+  image: File;
+  description: string;
+}
 
 
-export default function NewPost() {  
+async function postImage({image, description}: ImageUploadParams) {
+  const formData = new FormData();
+  formData.append("image", image)
+  formData.append("description", description)
+
+  const result = await axios.post('http://localhost:4000/s3/upload', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+  const imageURL = result.data.imageUrl;
+
+  return imageURL;
+}
+
+
+function TestUpload() {
 
   const [file, setFile] = useState()
-  const [caption, setCaption] = useState("")
+  const [description, setDescription] = useState("")
+  const [images, setImages] = useState<string[]>([]);
 
-  const navigate = useNavigate()
-
-  const submit = async (event: any) => {
-    event.preventDefault()
-
-    if (file) { 
-        const formData = new FormData();
-        formData.append("image", file);
-        formData.append("caption", caption);
-    
-        try {
-          await axios.post("/api/posts", formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-          navigate("/");
-        } catch (error) {
-          console.error("Error uploading the file:", error);
-        }
-      } else {
-        console.error("No file selected.");
-      }
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (file) {
+      const result = await postImage({ image: file, description });
+      setImages([result, ...images]);
+    }
   }
 
   const fileSelected = (event: any) => {
     const file = event.target.files[0]
-		setFile(file)
-	}
+    setFile(file)
+  }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="App">
+      <form onSubmit={submit}>
+        <input onChange={fileSelected} type="file" accept="image/*"></input>
+        <input value={description} onChange={e => setDescription(e.target.value)} type="text"></input>
+        <button type="submit">Submit</button>
+      </form>
 
-        <form onSubmit={submit} style={{width:650}} className="flex flex-col space-y-5 px-5 py-14">
-          <input onChange={fileSelected} type="file" accept="image/*"></input>
-          <input value={caption} onChange={e => setCaption(e.target.value)} type="text" placeholder='Caption'></input>
-          <button type="submit">Submit</button>
-        </form>
+      { images.map( image => (
+        <div key={image}>
+          <img src={image}></img>
+        </div>
+      ))}
 
     </div>
-  )
+  );
 }
+
+export default TestUpload;

@@ -38,18 +38,3 @@ export async function get_product(req) {
         return { status: false, result: error} 
     }
 }
-
-export async function saveImageToMongoDB(imageBuffer) {
-    try {
-        const database = client.db('productsDB');
-        const col = database.collection('imageTest');
-
-        const result = await col.insertOne({
-            data: imageBuffer,
-        });
-
-        return result.insertedId
-    } catch(error) {
-        return { status: false, result: error}
-    }
-}
