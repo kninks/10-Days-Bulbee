@@ -1,12 +1,14 @@
 #root {
   width: 393px;
-  height: 961px;
+  height: auto;
+  min-height: 800px;
   background: var(--white);
   font-family: Poppins, sans-serif;
   --black: #1A1B25;
   --white: #FFFDFD;
   --darkgrey: #525252;
   --lightgrey: #C8D0CE;
+  --purple: #392061;
 }
 
 .banner {

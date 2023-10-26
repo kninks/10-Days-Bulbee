@@ -1,4 +1,5 @@
 import "./OrderConfirmation.css";
+import BackToHome from "../components/BackToHome/BackToHome";
 
 interface Products {
   image: string;
@@ -36,6 +37,9 @@ function OrderConfirmation({image, name, price, item}: Products) {
             <img src="./light-bulb.png" className="bulb"/>
           </div>
         </div>
+      </div>
+      <div className="back-to-home-button">
+        <BackToHome />
       </div>
     </div>
   );
