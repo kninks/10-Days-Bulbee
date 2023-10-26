@@ -1,7 +1,11 @@
 import React from "react";
 import "./Category.css";
+interface Props {
+  category: string;
+  items: number;
+}
 
-const Category = () => {
+const Category = ({category, items}: Props) => {
   return (
     <div className="category-box">
       <div className="category-img">
@@ -9,10 +13,10 @@ const Category = () => {
       </div>
       <div className="text-area">
         <div className="category-name">
-          <p>All Category</p>
+          <p>{category}</p>
         </div>
         <div className="item-value">
-          <p>150 items</p>
+          <p>{items} items</p>
         </div>
       </div>
     </div>

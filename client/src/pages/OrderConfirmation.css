@@ -1,0 +1,14 @@
+.confirm-pic {
+    width: 151px;
+    height: 151px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    position: relative;
+}
+
+.confirm-message-1 {
+    text-align: center;
+    color: var(--black);
+}

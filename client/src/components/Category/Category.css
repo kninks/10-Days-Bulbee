@@ -20,19 +20,22 @@
     height: 40px;
     border-top: 1px solid #C8D0CE;
     margin-top: 89px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 100px 1px 66px
   }
 
   .category-name {
     font-size: 10px;
-    color: #1A1B25;
+    color: var(--black);
     font-weight: 700;
     margin-left: 13px;
   }
 
   .item-value {
-    color: #525252;
     font-size: 10px;
     font-weight: 400;
-    margin-left: 33px;
+    color: var(--darkgrey);
+    grid-column-start: 3;
+    text-align: right;
+    margin-right: 13px;
   }

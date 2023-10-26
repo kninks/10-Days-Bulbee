@@ -7,7 +7,12 @@ const Home = () => {
       <div className="banner">
         <h1>Banner Area</h1>
       </div>
-      <div className="banner-indicator"></div>
+      <div className="banner-indicator">
+        <span className="dot"></span>
+        <span className="dot"></span>
+        <span className="dot"></span>
+        <span className="dot"></span>
+      </div>
       <div className="section">
         <div className="my-bulb">
           <img src="/light-bulb.png" className="bulb-icon" />
@@ -25,10 +30,10 @@ const Home = () => {
       </div>
       <div className="category-section">
         <div className="category">
-          <Category />
-          <Category />
-          <Category />
-          <Category />
+          <Category category="All Products" items={150}/>
+          <Category category="Fashion" items={30}/>
+          <Category category="Beauty" items={50}/>
+          <Category category="Food & Drinks" items={70}/>
         </div>
       </div>
     </div>
