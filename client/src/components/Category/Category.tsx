@@ -1,5 +1,6 @@
 import React from "react";
 import "./Category.css";
+
 interface Props {
   category: string;
   items: number;
