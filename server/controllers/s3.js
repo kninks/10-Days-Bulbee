@@ -12,7 +12,7 @@ export async function insert_image(req) {
         const existed = col.findOne(ref)
 
         if (existed) {
-            const addImage = await col.updateOne(ref, { $set: { image: req.image } })
+            const addImage = await col.updateOne(ref, { $set: { picture_url: req.image } })
             
             if (addImage.modifiedCount === 1) {
                 console.log('Added Succesfully')
@@ -35,9 +35,13 @@ export async function get_image(req) {
         const col = database.collection('product')
 
         const ref = { id: req.id }
-        const getImageName = col.findOne(ref)
+        const doc = col.findOne(ref)
 
-        return getImageName;
+        if (doc && doc.image) {
+            return { image: doc.image }; 
+        } else {
+            throw new Error("Image not found or invalid data in the database.");
+        }
     } catch (error) {
         return { status: false, result: error }
     }

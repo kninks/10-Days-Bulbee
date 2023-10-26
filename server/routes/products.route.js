@@ -13,6 +13,7 @@ route.post('/add', async (req, res) => {
 
 route.get('/get', async (req, res) => {
     try {
+        console.log(req.body)
         const param = req.query.param;
         const _out = await get_product(param);
 

@@ -31,7 +31,7 @@ export async function get_product(req) {
         const col = database.collection('product');
 
         const desc = await col.findOne({ id: req }, { projection: {_id: 0}})
-        console.log(desc)
+        // console.log(desc)
 
         return desc
     } catch(error) {

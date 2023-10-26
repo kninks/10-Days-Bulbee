@@ -4,14 +4,14 @@ import './App.css'
 import Description from './pages/Description/Description';
 import Summary from './pages/Summary/Summary';
 import Header from './components/Header/Header';
-import NewPost from './pages/TestUpload';
+import AdminAdd from './pages/AdminAdd/AdminAdd';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/testupload' element={ <NewPost /> }></Route>
         <Route path='/description' element={ <Description /> }></Route>
+        <Route path='/adminadd' element={ <AdminAdd /> }></Route>
         <Route path='/summary' element={ <Summary /> }></Route>
       </Routes>
     </div>

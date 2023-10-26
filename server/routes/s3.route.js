@@ -9,10 +9,10 @@ import sharp from 'sharp';
 
 import { insert_image, get_image } from '../controllers/s3.js';
 
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config()
 
-const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
+const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const region = process.env.AWS_BUCKET_REGION
@@ -62,16 +62,23 @@ route.post('/upload', upload.single('image'), async (req, res) => {
 })
 
 route.get('/get', async (req, res) => {
-    const name = get_image()
-
-    const params = {
-        Bucket: bucketName,
-        Key: name.image
+    try {
+        console.log(req.body)
+        const param = req.query.param
+        const name = get_image(param)
+        console.log(name)
+        
+        const params = {
+            Bucket: bucketName,
+            Key: name.image
+        }
+        const command = new GetObjectCommand(params);
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    
+        return res.json({ url });
+    } catch(error) {
+        return res.json({ status: false, message: error });
     }
-    const command = new GetObjectCommand(params);
-    const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-
-    return url
 })
 
 // app.delete("/api/posts/:id", async (req, res) => {

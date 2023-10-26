@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './Description.css';
-import Header from '../../components/Header/Header';
 
 const Description = () => {
   const navigate = useNavigate();
@@ -9,24 +8,36 @@ const Description = () => {
     navigate('/summary')
   };
 
-  const product = {
-    name: 'Oh My Tint',   
-    id: 'd80729a5-c736-4d50-8fec-c961c2ce5057',   
-    description: 'OH MY TINT โฉมใหม่ล่าสุด 💋ลิปเนื้อละมุนในตำนานกลับมาอีก ครั้งแต่ราคาน่ารักเหมือนเดิม',
-    category: 'Beauty',   
-    picture_url: '',      
-    bulb_price: 99,       
-    quantity: 5
-  }
+  const productId = { param: 'eb306512-988f-436c-b236-10b94cdb15c8' };
+  const queryParam = new URLSearchParams(productId).toString();
 
-  // const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
+  const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
 
-  // useEffect(() => {
-  //   fetch('http://localhost:4000/products/get?param=d80729a5-c736-4d50-8fec-c961c2ce5057')
-  //     .then((res) => res.json())
-  //     .then((data) => setProduct(data)) 
-  //     .catch((error) => console.log(error));
-  // }, []);
+  const [imageUrl, setImageUrl] = useState('');
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/products/get?${queryParam}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => setProduct(data)) 
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/s3/get?${queryParam}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => setImageUrl(data.url)) 
+      .catch((error) => console.log('Getting error at signed url', error));
+  })
 
   const [count, setCount] = useState(0)
     const lowestCount = () => {
@@ -45,6 +56,9 @@ const Description = () => {
     <div>
       <Link to ='/' className='back-link'>Back</Link>
       <h1>Description</h1>
+      <div>
+        {imageUrl}
+      </div>
       <div className='product-title'>
         {product.name}
       </div>
