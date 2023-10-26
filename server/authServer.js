@@ -32,6 +32,3 @@ const SERVER_IP = "127.0.0.1";
 server.listen(PORT, SERVER_IP, () => {
     console.log(`Server is running at http://${SERVER_IP}:${PORT}`);
 });
-
-
-

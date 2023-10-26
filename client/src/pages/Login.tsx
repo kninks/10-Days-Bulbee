@@ -59,6 +59,9 @@ function Login() {
         try {
             const response = await LoginReq(formData);
             console.log(response)
+            setCookies("access_token", response.token);
+            window.sessionStorage.setItem("sid", response.sid);
+            navigate("/home")
             // if ("access_token" in response) {
             //     setCookies("access_token", response.token);
             //     window.localStorage.setItem("sid", response.sid);
@@ -93,7 +96,7 @@ function Login() {
                             name="sid"
                             value={formData.sid}
                             onChange={handleFormChange}
-                            placeholder="Enter your student is"
+                            placeholder="Enter your student ID"
                             className='auth-text-field'
                             required
                         />
@@ -102,7 +105,7 @@ function Login() {
                     <div>
                         <label htmlFor='password' className='auth-text-field-label'>Password</label>
                         <input
-                            type="text" // "password"
+                            type="password" // "password"
                             name="password"
                             value={formData.password}
                             onChange={handleFormChange}
@@ -112,7 +115,8 @@ function Login() {
                         />
                     </div>
                     <button type="submit" className='submit-button'>Log in</button>
-                    <Link to='/register' className='redirect-text'>Register for an account</Link>
+                        <Link to='/register' className='redirect-text'>Register for an account</Link>
+
                 </div>
             </form>
 

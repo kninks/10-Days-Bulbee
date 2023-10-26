@@ -1,6 +1,10 @@
 const route = require('express').Router();
 const { get_all_user, register, login } = require('../controllers/users')
 
+// import { Router } from 'express';
+// const route = Router();
+// import { get_all_user, register, login } from '../controllers/users.js'
+
 route.get('/get_all_user', async (req,res) => {
     try {
         const foundUsers = get_all_user();

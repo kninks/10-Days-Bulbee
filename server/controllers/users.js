@@ -1,7 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const { MongoClient } = require('mongodb')
+
+// import bcrypt from 'bcrypt';
+// import jwt from 'jsonwebtoken';
+// import { MongoClient } from 'mongodb';
+
 const url = 'mongodb+srv://bupbee:bulbeepassword@bulbeedb.oqjikje.mongodb.net/?retryWrites=true&w=majority'
 const client = new MongoClient(url)
 

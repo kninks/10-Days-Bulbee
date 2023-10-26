@@ -7,13 +7,14 @@ interface FormData {
     first_name: string;
     last_name: string;
     sid: string;
+    phone_number: string;
     address: string;
     postal_code: string;
     password: string;
 }
 
-async function RegisterReq({ first_name, last_name, address, postal_code, sid, password }: FormData) : Promise<any> {
-    const req = { first_name, last_name, sid, address, postal_code, password }
+async function RegisterReq({ first_name, last_name, sid, phone_number, address, postal_code, password }: FormData) : Promise<any> {
+    const req = { first_name, last_name, sid, phone_number, address, postal_code, password }
     console.log(req)
 
     try {
@@ -42,6 +43,7 @@ function Register() {
         first_name: "",
         last_name: "",
         sid: "",
+        phone_number: "",
         address: "",
         postal_code: "",
         password: "",
@@ -106,6 +108,16 @@ function Register() {
                     />
                 </div>
                 <div>
+                    <label htmlFor="phone_number" className='auth-text-field-label'>Phone Number</label>
+                    <input
+                        type="text"
+                        name="phone_number"
+                        value={formData.phone_number}
+                        onChange={handleFormChange}
+                        className='auth-text-field'
+                    />
+                </div>
+                <div>
                     <label htmlFor="address" className='auth-text-field-label'>Address</label>
                     <input
                         type="text"
@@ -129,7 +141,7 @@ function Register() {
                 <div>
                     <label htmlFor='password' className='auth-text-field-label'>Password</label>
                     <input
-                        type="text" // "password"
+                        type="password" // "password"
                         name="password"
                         value={formData.password}
                         onChange={handleFormChange}

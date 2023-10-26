@@ -29,7 +29,7 @@
     /* background-color: aqua; */
     box-sizing: border-box;
     width: 300px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* TextField ------------------------------- */
@@ -56,7 +56,7 @@
     display: block;
     /* background-color: chartreuse; */
     width: 300px;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     text-align: left;
     font-size: 15px;
     font-weight: 600;
@@ -80,6 +80,7 @@
 .redirect-text {
     color: #525252;
     text-decoration: underline;
+    display: block;
 }
 
 .redirect-text:hover {
