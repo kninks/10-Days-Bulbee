@@ -1,5 +1,5 @@
 const route = require('express').Router();
-const { add_product, get_product , get_all_products} = require('../controllers/products')
+const { add_product, get_product , get_all_products, get_products_by_category} = require('../controllers/products')
 
 route.post('/add', async (req, res) => {
     try {
@@ -29,6 +29,19 @@ route.get('/get-all', async (req, res) => {
         return res.json({ status: false, message: error });
     }
 })
+
+route.get('/get-by-category', async (req, res) => {
+    try {
+        const category = req.query.category;
+        console.log(category);
+        const productsByCategory = await get_products_by_category(category);
+
+        return res.json(productsByCategory);
+    } catch(error) {
+        return res.json({ status: false, message: error });
+    }
+})
+
 
 
 module.exports = route;

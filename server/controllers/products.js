@@ -52,19 +52,25 @@ async function get_all_products() {
         console.log('get_all_products function called');
         const database = client.db('productsDB');
         const col = database.collection('product');
-
-        // Use find() to retrieve all products, and toArray() to convert the cursor to an array.
         const products = await col.find().toArray();
-
-        console.log(products);
-
+       console.log(products);
         return products;
     } catch(error) {
         return { status: false, result: error };
     }
 }
 
-module.exports = { add_product, get_product, get_all_products };
+async function get_products_by_category(category) {
+    try {
+        const database = client.db('productsDB');
+        const col = database.collection('product');
+        const products = await col.find({ category: category }).toArray();
+        return products;
+    } catch (error) {
+        return { status: false, result: error };
+    }
+}
 
 
-//module.exports = { add_product, get_product }
+
+module.exports = { add_product, get_product, get_all_products, get_products_by_category };
