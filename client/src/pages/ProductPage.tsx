@@ -22,7 +22,7 @@ const ProductPage: React.FC = () => {
         <ProductCard
           key={index}
           name={product.name}
-          price={product.bulb_price} // Adjust property name as needed
+          price={product.bulb_price}
           picture_url={product.picture_url}
         />
       ))}

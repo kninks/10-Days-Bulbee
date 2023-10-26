@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../earn.css';
+import LightBulbImg from "../assets/light-bulb.png"
 
 interface ProductCardProps {
   name: string;
@@ -12,8 +13,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, price, picture_url }) =
   return (
     <div className="product-card">
       <img src={picture_url} alt={name} />
-      <h2>{name}</h2>
-      <p>{price}</p>
+      <h3>{name}</h3>
+      <div class = "price-container">
+        <p>{price}</p>
+        <img src={LightBulbImg} alt="รูปหลอดไฟ ไอสัส" class="thumbnail"></img>
+      </div>
     </div>
   );
 };
