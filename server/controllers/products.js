@@ -33,6 +33,11 @@ export async function get_product(req) {
 
         const desc = await col.findOne({ id: req }, { projection: {_id: 0}})
         // console.log(desc)
+        // const ref = { id: req }
+        // const doc = await col.findOne(ref)
+        // console.log('img_url', doc.picture_url)
+
+        // return { picture_url: doc.picture_url }; 
 
         return desc
     } catch(error) {

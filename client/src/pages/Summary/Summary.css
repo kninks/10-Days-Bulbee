@@ -21,6 +21,22 @@
     text-decoration-line: underline;
 }
 
+.seperate-line {
+    width: 337px;
+    height: 2px;
+    background: #C8D0CE;;
+    margin: 20px 0;
+    border-bottom: 1px;
+}
+
+.bulb-png {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    margin-left: 1px;
+    margin-top: 5px;
+}
+
 .order-summary {
     color: #000;
     font-size: 20px;
@@ -29,9 +45,40 @@
     display: flex;
 }
 
+.product-description {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-name {
+    color: #1A1B25;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.product-bulb {
+    color: #1A1B25;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
 .discount-container {
     display: flex;
     align-items: center;
+}
+
+.head-sub {
+    color: #1A1B25;
+    font-family: Poppins;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    display: flex;
 }
 
 .input-text {
@@ -63,12 +110,6 @@
     font-weight: 700;
 }
 
-.seperate-line {
-    width: 337px;
-    height: 1px;
-    background: #C8D0CE;
-}
-
 .confirm-button {
     width: 71.575px;
     height: 30px;
@@ -78,4 +119,81 @@
     text-align: center;
     font-size: 14px;
     font-weight: 700;
+}
+
+.text-both {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .text-both-sub {
+    color: #1A1B25;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+.total-payment {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .total-payment-left {
+    color: #1A1B25;
+    font-family: Poppins;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+  }
+  
+  .total-payment-right {
+    color: #1A1B25;
+    font-family: Poppins;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;  
+}
+
+.detail {
+    color: #1A1B25;
+    font-family: Poppins;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    display: flex;
+}
+
+.additional-box {
+    width: 337px;
+    height: 78px;
+    flex-shrink: 0;
+
+    fill: #FFFDFD;
+    stroke-width: 1px;
+    stroke: #C8D0CE;
+}
+
+.confirm-button {
+    width: 353px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: #392061;
+
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit; 
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff; 
+    text-align: center; 
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
 }

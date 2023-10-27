@@ -7,7 +7,6 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from 'crypto';
 import sharp from 'sharp';
 
-import { get_image } from '../controllers/s3.js';
 import { add_product } from '../controllers/products.js'
 
 import dotenv from 'dotenv';
@@ -20,7 +19,7 @@ const region = process.env.AWS_BUCKET_REGION
 const accessKeyId = process.env.AWS_ACCESS_KEY
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
 
-const s3Client = new S3Client({
+const s3 = new S3Client({
   region,
   credentials: {
     accessKeyId,
@@ -37,34 +36,40 @@ route.post('/upload', upload.single('image'), async (req, res) => {
     //resizing
     // const buffer = sharp(req.file.buffer).resize({height: 1080, width: 1080, fit: 'contain'}).toBuffer()
 
-    req.file.buffer
-    const imageName = generateFileName();
-    const uploadParams = {
-        Bucket: bucketName,
-        Key: imageName,
-        Body: req.file.buffer,
-        ContentType: req.file.mimetype
-    }
+    try {
+        const imageName = generateFileName();
+        const uploadParams = {
+            Bucket: bucketName,
+            Key: imageName,
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype
+        }
 
-    const command = new PutObjectCommand(uploadParams)
-    await s3Client.send(command)
+        const command = new PutObjectCommand(uploadParams);
+
+        const uploadResponse = await s3.send(command);
+
+        console.log('Upload successful:', uploadResponse);
 
     // console.log('id', req.body.description)
     // console.log('imagename', imageName)
     
-    const productData = {
-        name: req.body.product,
-        description: req.body.description,
-        category: req.body.category,
-        quantity: req.body.quantity,
-        price: req.body.price,
-        image: imageName
+        const productData = {
+            name: req.body.product,
+            description: req.body.description,
+            category: req.body.category,
+            quantity: req.body.quantity,
+            price: req.body.price,
+            image: imageName
+        }
+
+        const uploadToMongo = await add_product(productData)
+        // console.log('uploadtomongo', uploadToMongo)
+
+        return {status: true, result: uploadToMongo};
+    } catch (error) {
+        console.error('Error uploading to S3:', error);
     }
-
-    const uploadToMongo = await add_product(productData)
-    // console.log('uploadtomongo', uploadToMongo)
-
-    return {status: true, result: uploadToMongo};
 })
 
 route.get('/get', async (req, res) => {
