@@ -1,5 +1,5 @@
 #root {
-  width: 393px;
+  width: auto;
   height: auto;
   min-height: 800px;
   background: var(--white);
@@ -12,8 +12,9 @@
 }
 
 .banner {
-  width: 353px;
-  height: 350px;
+  width: auto;
+  min-height: 350px;
+  height: auto;
   border: 1px solid #C8D0CE;
   display: flex;
   flex-wrap: wrap;
@@ -24,7 +25,8 @@
 }
 
 .section {
-  margin: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
   display: flex;
   gap: 19px;
 }

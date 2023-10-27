@@ -4,8 +4,14 @@ import BackToHome from "../components/BackToHome/BackToHome";
 interface Products {
   image: string;
   name: string;
-  price: string;
-  item: string;
+  price: number;
+  item: number | undefined;
+}
+
+function renderItemsCount(props: Products) {
+  const { item } = props;
+  const itemText = item === 1 ? "Item" : "Items";
+  return `${item} ${itemText}`;
 }
 
 function OrderConfirmation({image, name, price, item}: Products) {
@@ -28,8 +34,15 @@ function OrderConfirmation({image, name, price, item}: Products) {
             <img src={image} />
           </div>
           <p className="product-name">{name}</p>
-          <div className="product-detail">
-            <p>{item}</p>
+          <div className="product-items">
+            <p>{renderItemsCount({
+              item,
+              image: "",
+              name: "",
+              price: 0
+            })}</p>
+          </div>
+          <div className="product-view-details">
             <p><u>View Details</u></p>
           </div>
           <div className="product-price">

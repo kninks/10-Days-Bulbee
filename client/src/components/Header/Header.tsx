@@ -13,7 +13,7 @@ const Header = () => {
       </div>
       <div className='bulb-balance-top'>
         <img src='/light-bulb.png' className='balance-top-img' />
-        <p>{}</p>
+        <p>{10000}</p>
       </div>
     </div>
   );
