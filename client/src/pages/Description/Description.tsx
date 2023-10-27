@@ -34,10 +34,10 @@ const Description = () => {
         'Content-Type': 'application/json'
       }
     })
-      .then((res) => res.json())
-      .then((data) => setImageUrl(data.url)) 
+      .then((res) => res.text())
+      .then((data) => setImageUrl(data))
       .catch((error) => console.log('Getting error at signed url', error));
-  })
+  }, []);
 
   const [count, setCount] = useState(0)
     const lowestCount = () => {
@@ -57,7 +57,7 @@ const Description = () => {
       <Link to ='/' className='back-link'>Back</Link>
       <h1>Description</h1>
       <div>
-        {imageUrl}
+        <img src={imageUrl} alt="Product Image" className="product-image" />
       </div>
       <div className='product-title'>
         {product.name}

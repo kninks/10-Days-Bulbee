@@ -40,15 +40,16 @@ const Summary = () => {
       <div className='order-summary'>
         Order Summary
       </div> 
-      <div>
+      <div className='discount-container'>
       <input type="text" value={textData} onChange={handleInputChange} className='input-text'/>
         <button className='apply-button' onClick={handleSubmit}>Apply</button>
       </div>
+      <div className='seperate-line'></div>
 
       <div className='footer'>
         <button className='confirm-button' onClick={handleConfirmClick}>Confirm</button>
-        <div className='back-link'>
-          <Link to ='/description' >Cancel Order</Link></div>
+        {/* <div className='back-link'>
+          <Link to ='/description' >Cancel Order</Link></div> */}
       </div>
     </div>
   )

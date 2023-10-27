@@ -34,14 +34,11 @@ export async function get_image(req) {
         const database = client.db('productsDB')
         const col = database.collection('product')
 
-        const ref = { id: req.id }
-        const doc = col.findOne(ref)
+        const ref = { id: req }
+        const doc = await col.findOne(ref)
+        console.log('img_url', doc.picture_url)
 
-        if (doc && doc.image) {
-            return { image: doc.image }; 
-        } else {
-            throw new Error("Image not found or invalid data in the database.");
-        }
+        return { picture_url: doc.picture_url }; 
     } catch (error) {
         return { status: false, result: error }
     }

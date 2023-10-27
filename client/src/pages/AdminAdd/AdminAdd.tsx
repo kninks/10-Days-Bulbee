@@ -19,17 +19,39 @@ async function postImage({image, description}: ImageUploadParams) {
     return imageURL;
   }
 
+interface productParams {
+    product: string;
+    description: string;
+    category: string;
+    quantity: number;
+    price: number
+}
+
+async function postProduct({product, description, category, quantity, price}: productParams) {
+    const productData = new FormData();
+    productData.append('name', product)
+    productData.append('description', description)
+    productData.append('category', category)
+    productData.append('quantity', quantity.toString())
+    productData.append('price', price.toString())
+
+    const result = await axios.post('http://localhost:4000/products/add', productData, { headers: {'Content-Type': 'application/json',}})
+  
+    return result;
+}
+
 const AdminAdd = () => {
     const [file, setFile] = useState()
     const [description, setDescription] = useState("")
     const [images, setImages] = useState<string[]>([]);
+    const [selectedOption, setSelectedOption] = useState('')
 
     const submit = async (event: React.FormEvent) => {
-      event.preventDefault();
-      if (file) {
-        const result = await postImage({ image: file, description });
-        setImages([result, ...images]);
-      }
+        event.preventDefault();
+        if (file) {
+          const result = await postImage({ image: file, description });
+          setImages([result, ...images]);
+        }
     }
 
     const fileSelected = (event: any) => {
@@ -37,9 +59,8 @@ const AdminAdd = () => {
       setFile(file)
     }
 
-    const [selectedOption, setSelectedOption] = useState('Noen')
 
-        const handleDropdownChange = (e: any) => {
+    const handleDropdownChange = (e: any) => {
         setSelectedOption(e.target.value)
     }
 
@@ -50,7 +71,7 @@ const AdminAdd = () => {
         <div className='product-title'>
             Product Name
         </div>
-            <input type='text' name='name' className='name-input'></input>
+            <input type='text' name='product' className='name-input'></input>
         <div className='product-title'>
             Description
         </div>
@@ -88,10 +109,10 @@ const AdminAdd = () => {
               </div>
             ))}
         </div>
-    </form>
         <button className='add-button' type="submit">
             Add Product
         </button>
+    </form>
     </div>
   )
 }

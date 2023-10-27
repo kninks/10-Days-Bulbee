@@ -63,17 +63,17 @@ route.post('/upload', upload.single('image'), async (req, res) => {
 
 route.get('/get', async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log('req.query:', req.query)
         const param = req.query.param
-        const name = get_image(param)
-        console.log(name)
+        const name = await get_image(param)
         
         const params = {
             Bucket: bucketName,
-            Key: name.image
+            Key: name.picture_url
         }
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        console.log('aws_url', url)
     
         return res.json({ url });
     } catch(error) {
