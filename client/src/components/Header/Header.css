@@ -1,6 +1,6 @@
 .header {
     background-color: #392061;
-    width: auto;
+    width: 100%;
     height: 67px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -34,7 +34,7 @@
     align-items: center;
     position: relative;
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: auto;
     }
   
   .balance-top-img {
