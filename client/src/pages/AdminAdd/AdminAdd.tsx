@@ -3,23 +3,8 @@ import { useNavigate, Link } from 'react-router-dom'
 import './AdminAdd.css'
 import axios from 'axios'
 
-interface ImageUploadParams {
+interface UploadParams {
     image: File;
-    description: string;
-}
-
-async function postImage({image, description}: ImageUploadParams) {
-    const formData = new FormData();
-    formData.append("image", image)
-    formData.append("description", description)
-  
-    const result = await axios.post('http://localhost:4000/s3/upload', formData, { headers: {'Content-Type': 'multipart/form-data'}})
-    const imageURL = result.data.imageUrl;
-  
-    return imageURL;
-  }
-
-interface productParams {
     product: string;
     description: string;
     category: string;
@@ -27,30 +12,84 @@ interface productParams {
     price: number
 }
 
-async function postProduct({product, description, category, quantity, price}: productParams) {
-    const productData = new FormData();
-    productData.append('name', product)
-    productData.append('description', description)
-    productData.append('category', category)
-    productData.append('quantity', quantity.toString())
-    productData.append('price', price.toString())
+// async function postData({image, product, description, category, quantity, price}: UploadParams) {
+//     const formData = new FormData();
+//     formData.append("image", image)
+//     formData.append('name', product)
+//     formData.append('description', description)
+//     formData.append('category', selectedOption)
+//     formData.append('quantity', quantity.toString())
+//     formData.append('price', price.toString())
 
-    const result = await axios.post('http://localhost:4000/products/add', productData, { headers: {'Content-Type': 'application/json',}})
+    // console.log('Data to be sent to the server:', {
+    //     image,
+    //     product,
+    //     description,
+    //     category,
+    //     quantity,
+    //     price,
+    // });
   
-    return result;
-}
+//     const result = await axios.post('http://localhost:4000/s3/upload', formData, { headers: {'Content-Type': 'multipart/form-data'}})
+//     const imageURL = result.data.imageUrl;
+  
+//     return imageURL;
+//   }
 
 const AdminAdd = () => {
     const [file, setFile] = useState()
-    const [description, setDescription] = useState("")
+    const [product, setProduct] = useState('')
+    const [description, setDescription] = useState('')
+    const [selectedOption, setSelectedOption] = useState<string>('Beauty');
+    const [quantity, setQuantity] = useState(0)
+    const [price, setPrice] = useState(0)
     const [images, setImages] = useState<string[]>([]);
-    const [selectedOption, setSelectedOption] = useState('')
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        // if (file) {
+        //   const result = await postData({ image: file, product, description, category, quantity, price });
+        //   setImages([result, ...images]);
+        // }
         if (file) {
-          const result = await postImage({ image: file, description });
-          setImages([result, ...images]);
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('product', product);
+            formData.append('description', description);
+            formData.append('category', selectedOption);
+            formData.append('quantity', quantity.toString());
+            formData.append('price', price.toString());
+
+            try {
+                const response = await axios.post('http://localhost:4000/s3/upload', formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data',
+                  },
+                });
+        
+                if (response.data.status === 'success') {
+                  const imageUrl = response.data.imageUrl;
+                  console.log('File upload successful:', imageUrl);
+                  setImages([imageUrl, ...images]);
+                } else {
+                  console.error('File upload failed');
+                }
+              } catch (error) {
+                console.error('Error during the file upload:', error);
+              }
+    }}
+
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
+        if (name === 'product') {
+          setProduct(value);
+        } else if (name === 'description') {
+          setDescription(value);
+        } else if (name === 'quantity') {
+          setQuantity(parseInt(value) || 0);
+        } else if (name === 'price') {
+          setPrice(parseInt(value) || 0);
         }
     }
 
@@ -59,9 +98,8 @@ const AdminAdd = () => {
       setFile(file)
     }
 
-
-    const handleDropdownChange = (e: any) => {
-        setSelectedOption(e.target.value)
+    const handleCategoryChange = (event: any) => {
+        setSelectedOption(event.target.value)
     }
 
   return (
@@ -71,15 +109,15 @@ const AdminAdd = () => {
         <div className='product-title'>
             Product Name
         </div>
-            <input type='text' name='product' className='name-input'></input>
+            <input type='text' name='product' className='name-input' value={product} onChange={handleInputChange}></input>
         <div className='product-title'>
             Description
         </div>
-            <input type='text' name='description' className='description-input' value={description} onChange={e => setDescription(e.target.value)} ></input>
+            <input type='text' name='description' className='description-input' value={description} onChange={handleInputChange} ></input>
         <div className='product-title'>
             Category
         </div>
-        <select value={selectedOption} onChange={handleDropdownChange} className='category-dropdown'>
+        <select value={selectedOption} onChange={handleCategoryChange} className='category-dropdown'>
             <option value='Beauty' className='category-option'>Beauty</option>
             <option value='Fasion' className='category-option'>Fasion</option>
             <option value='FoodnDrinks' className='category-option'>Food & Drinks</option>
@@ -93,8 +131,8 @@ const AdminAdd = () => {
             </div>
         </div>
         <div className='input-container'>
-            <input type='text' name='quantity' className='two-input left2'></input>
-            <input type='text' name='price' className='two-input right2'></input>
+            <input type='text' name='quantity' className='two-input left2' value={quantity} onChange={handleInputChange}></input>
+            <input type='text' name='price' className='two-input right2' value={price} onChange={handleInputChange}></input>
         </div>
         <div className='product-title'>
             Image

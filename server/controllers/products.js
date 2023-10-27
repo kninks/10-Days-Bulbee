@@ -1,21 +1,22 @@
 import { MongoClient } from 'mongodb';
 const url = 'mongodb+srv://bupbee:bulbeepassword@bulbeedb.oqjikje.mongodb.net/?retryWrites=true&w=majority'
 const client = new MongoClient(url)
-import { UUID } from 'mongodb';
+import { v4 as uuidv4 } from 'uuid';
 client.connect();
 
 export async function add_product(req) {
     try {
         const database = client.db('productsDB');
-        const col = database.collection('product');
+        const col = database.collection('admin');
+        // console.log('req form add product', req)
 
         const product = await col.insertOne({
             name: req.name,
-            id: UUID,
+            id: uuidv4(),
             description: req.description,
             category: req.category,
-            picture_url: req.picture_url,
-            bulb_price: req.bulb_price,
+            picture_url: req.image,
+            bulb_price: req.price,
             quantity: req.quantity
         })
 

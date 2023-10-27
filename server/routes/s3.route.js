@@ -7,7 +7,8 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from 'crypto';
 import sharp from 'sharp';
 
-import { insert_image, get_image } from '../controllers/s3.js';
+import { get_image } from '../controllers/s3.js';
+import { add_product } from '../controllers/products.js'
 
 import dotenv from 'dotenv';
 dotenv.config()
@@ -51,14 +52,19 @@ route.post('/upload', upload.single('image'), async (req, res) => {
     // console.log('id', req.body.description)
     // console.log('imagename', imageName)
     
-    const data = {
-        id: req.body.description,
+    const productData = {
+        name: req.body.product,
+        description: req.body.description,
+        category: req.body.category,
+        quantity: req.body.quantity,
+        price: req.body.price,
         image: imageName
     }
 
-    const uploadToMongo = await insert_image(data)
+    const uploadToMongo = await add_product(productData)
+    // console.log('uploadtomongo', uploadToMongo)
 
-    return uploadToMongo;
+    return {status: true, result: uploadToMongo};
 })
 
 route.get('/get', async (req, res) => {

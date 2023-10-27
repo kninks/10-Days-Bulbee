@@ -43,6 +43,7 @@
     border: 1px solid #1A1B25;
     background: #FFFDFD;
     display: flex;
+    font-weight: 600;
 }
 
 .category-dropdown {
@@ -104,6 +105,8 @@
     border-radius: 6px;
     border: 1px solid #1A1B25;
     background: #FFFDFD;
+    font-weight: 600;
+
   }
   
   .left2 {
