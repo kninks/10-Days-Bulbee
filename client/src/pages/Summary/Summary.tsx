@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import './Summary.css'
 
 const Summary = () => {
@@ -12,6 +12,11 @@ const Summary = () => {
   const [discount, setDiscount] = useState(0)
   const [shipping, setShipping] = useState(45)
   const [total, setTotal] = useState(0)
+  const [subtotal, setSubtotal] = useState(0)
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const count = parseInt(params.get('count') || '0', 10); // Parse the count from URL or default to 0.
 
   // const handleInputChange = (e: any) => {
   //   setCode(e.target.value);
@@ -41,7 +46,7 @@ const Summary = () => {
     }
   }
 
-  const productId = { param: '86f2addc-8387-4922-8afa-3610f231cc50' };
+  const productId = { param: '46ca6f33-cd6d-44a7-8078-0bd4e33e420d' };
   const queryParam = new URLSearchParams(productId).toString();
 
   const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
@@ -65,7 +70,10 @@ const Summary = () => {
   }, []);
 
   useEffect(() => {
-    const calculate: number = parseFloat(product.bulb_price) + shipping - discount;    setTotal(calculate)
+    const calSub: number = parseFloat(product.bulb_price) * count
+    const calculate: number = parseFloat(calSub) + shipping - discount;    
+    setTotal(calculate)
+    setSubtotal(calSub)
   }, [discount, product.bulb_price, shipping]);
 
 
@@ -102,7 +110,7 @@ const Summary = () => {
       </div>
       <div className='text-both'>
         <div className='text-both-sub'>Payment subtotal</div>
-        <div className='text-both-sub'>{product.bulb_price}</div>
+        <div className='text-both-sub'>{subtotal}</div>
       </div>
       <div className='text-both'>
         <div className='text-both-sub'>Shipping</div>

@@ -6,10 +6,10 @@ import useSwr from "swr"
 const Description = () => {
   const navigate = useNavigate();
   const handleBuyNowClick = () => {
-    navigate('/summary')
+    navigate(`/summary?count=${count}`);
   };
 
-  const productId = { param: '86f2addc-8387-4922-8afa-3610f231cc50' };
+  const productId = { param: '46ca6f33-cd6d-44a7-8078-0bd4e33e420d' };
   const queryParam = new URLSearchParams(productId).toString();
 
   // const { data, isLoading, error} = useSwr(`http://localhost:4000/product/get?${queryParam}`, () => {
