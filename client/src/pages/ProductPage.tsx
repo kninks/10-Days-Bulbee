@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard/ProductCard';
 import Header from '../components/Header/Header';
 
-import '../earn.css'
+import './ProductPage.css'
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;700&display=swap" rel="stylesheet"></link>
 
 
 const ProductPage: React.FC = () => {

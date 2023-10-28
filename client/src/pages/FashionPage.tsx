@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard/ProductCard';
+import Header from '../components/Header/Header';
+
+import './ProductPage.css'
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;700&display=swap" rel="stylesheet"></link>
 
 const FashionPage: React.FC = () => {
   const [products, setProducts] = useState([]);
@@ -18,15 +22,18 @@ useEffect(() => {
   
 
   return (
-    <div className="product-grid">
-      {products.map((product, index) => (
-        <ProductCard
-          key={index}
-          image={product.image} //--------------- ?
-          name={`${product.name} ${index + 1}`}
-          price={product.bulb_price}
-        />
-      ))}
+    <div>
+      <Header/>
+      <div className="product-grid">
+        {products.map((product, index) => (
+          <ProductCard
+            key={index}
+            image={product.image}
+            name={`${product.name} ${index + 1}`}
+            price={product.bulb_price}
+          />
+        ))}
+      </div>
     </div>
   );
 
