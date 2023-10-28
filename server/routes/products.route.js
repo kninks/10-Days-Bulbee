@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import express from 'express';
 const route = express.Router();
 import multer from 'multer'
@@ -9,7 +8,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from 'crypto';
 import sharp from 'sharp';
 
-import { add_product, get_product } from '../controllers/products.js'
+import { add_product, get_product, get_all_products, get_products_by_category } from '../controllers/products.js'
 
 import dotenv from 'dotenv';
 dotenv.config()
@@ -102,31 +101,6 @@ route.get('/get', async (req, res) => {
     }
 })
 
-// app.delete("/api/posts/:id", async (req, res) => {
-//   const id = +req.params.id
-//   const post = await prisma.posts.findUnique({where: {id}}) 
-
-//   await deleteFile(post.imageName)
-
-//   await prisma.posts.delete({where: {id: post.id}})
-//   res.send(post)
-// })
-
-// export function deleteFile(fileName) {
-//     const deleteParams = {
-//       Bucket: bucketName,
-//       Key: fileName,
-//     }
-  
-//     return s3Client.send(new DeleteObjectCommand(deleteParams));
-//   }
-
-
-export default route;
-=======
-const route = require('express').Router();
-const { add_product, get_product , get_all_products, get_products_by_category} = require('../controllers/products')
-
 route.post('/add', async (req, res) => {
     try {
         const _out = await add_product(req.body);
@@ -168,7 +142,24 @@ route.get('/get-by-category', async (req, res) => {
     }
 })
 
+// app.delete("/api/posts/:id", async (req, res) => {
+//   const id = +req.params.id
+//   const post = await prisma.posts.findUnique({where: {id}}) 
+
+//   await deleteFile(post.imageName)
+
+//   await prisma.posts.delete({where: {id: post.id}})
+//   res.send(post)
+// })
+
+// export function deleteFile(fileName) {
+//     const deleteParams = {
+//       Bucket: bucketName,
+//       Key: fileName,
+//     }
+  
+//     return s3Client.send(new DeleteObjectCommand(deleteParams));
+//   }
 
 
-module.exports = route;
->>>>>>> origin/Earn
+export default route;

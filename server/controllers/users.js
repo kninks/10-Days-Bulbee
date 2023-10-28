@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { MongoClient } = require('mongodb')
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { MongoClient } from 'mongodb';
 
 // import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
@@ -14,7 +14,7 @@ client.connect();
 const db = client.db('usersDB');
 const collection = db.collection('user');
 
-async function get_all_user(req) {
+export async function get_all_user(req) {
     try {
         const cursor = collection.find({})
         const allUsers = await cursor.toArray();
@@ -29,7 +29,7 @@ async function get_all_user(req) {
     }
 }
 
-async function register(req) {
+export async function register(req) {
     try {
         let newUser = req.body;
         const existedUser = await collection.findOne({sid:newUser.sid});
@@ -56,7 +56,7 @@ async function register(req) {
     }
 }
 
-async function login(req) {
+export async function login(req) {
     try {
         const user = req.body;
         const existedUser = await collection.findOne({sid: user.sid});
@@ -82,5 +82,3 @@ async function login(req) {
         return { message: "Some error occur!" };
     }
 }
-
-module.exports = { get_all_user, register, login }

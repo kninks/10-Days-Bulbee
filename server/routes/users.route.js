@@ -1,5 +1,6 @@
-const route = require('express').Router();
-const { get_all_user, register, login } = require('../controllers/users')
+import express from 'express';
+const route = express.Router();
+import { get_all_user, register, login } from '../controllers/users.js'
 
 // import { Router } from 'express';
 // const route = Router();
@@ -35,5 +36,4 @@ route.post('/login', async (req, res) => {
     }
 })
 
-module.exports = route;
-
+export default route;
