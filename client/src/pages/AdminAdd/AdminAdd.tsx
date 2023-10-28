@@ -62,7 +62,7 @@ const AdminAdd = () => {
             formData.append('price', price.toString());
 
             try {
-                const response = await axios.post('http://localhost:4000/s3/upload', formData, {
+                const response = await axios.post('http://localhost:4000/product/upload', formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data',
                   },

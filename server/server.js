@@ -13,10 +13,8 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 import products_routes from '../server/routes/products.route.js'
 import info_routes from '../server/routes/info.route.js'
-import s3_routes from '../server/routes/s3.route.js'
-app.use('/products', products_routes)
+app.use('/product', products_routes)
 app.use(info_routes)
-app.use('/s3', s3_routes)
 
 //Run Server -------------------------------------------------
 const PORT = 4000; 
