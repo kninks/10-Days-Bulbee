@@ -1,8 +1,7 @@
-const { MongoClient } = require('mongodb')
+import { MongoClient } from 'mongodb';
 const url = 'mongodb+srv://bupbee:bulbeepassword@bulbeedb.oqjikje.mongodb.net/?retryWrites=true&w=majority'
 const client = new MongoClient(url)
-const { v4: uuidv4 } = require('uuid');
-//client.connect();
+import { v4 as uuidv4 } from 'uuid';
 client.connect()
     .then(() => {
         console.log('Connected to MongoDB');
@@ -11,11 +10,12 @@ client.connect()
         console.error('MongoDB Connection Error:', error);
     });
 
-
-async function add_product(req) {
+export async function add_product(req) {
     try {
         const database = client.db('productsDB');
-        const col = database.collection('product');
+        const col = database.collection('admin');
+        // console.log('req form add product', req)
+
 
         const product = await col.insertOne({
             name: req.name,
@@ -33,34 +33,33 @@ async function add_product(req) {
     }
 }
 
-async function get_product(req) {
+export async function get_product(req) {
     try {
         const database = client.db('productsDB');
-        const col = database.collection('product');
+        const col = database.collection('admin');
 
         const desc = await col.findOne({ id: req }, { projection: {_id: 0}})
-        console.log(desc)
-
+        // console.log(desc) 
         return desc
     } catch(error) {
         return { status: false, result: error} 
     }
 }
 
-async function get_all_products() {
+export async function get_all_products() {
     try {
-        console.log('get_all_products function called');
+        // console.log('get_all_products function called');
         const database = client.db('productsDB');
-        const col = database.collection('product');
+        const col = database.collection('admin');
         const products = await col.find().toArray();
-       console.log(products);
+    //    console.log(products);
         return products;
     } catch(error) {
         return { status: false, result: error };
     }
 }
 
-async function get_products_by_category(category) {
+export async function get_products_by_category(category) {
     try {
         const database = client.db('productsDB');
         const col = database.collection('product');
@@ -70,7 +69,3 @@ async function get_products_by_category(category) {
         return { status: false, result: error };
     }
 }
-
-
-
-module.exports = { add_product, get_product, get_all_products, get_products_by_category };

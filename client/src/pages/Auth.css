@@ -1,0 +1,90 @@
+.bulbee {
+    /* height: 72px; */
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 72px;
+    padding: 5px;
+    /* background-color: aquamarine; */
+}
+
+.auth-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    padding: 5px;
+    margin-bottom: 20px;
+    /* background-color: rebeccapurple; */
+}
+
+.form-card {
+    box-sizing: border-box;
+    background-color: #FFFDFD;
+    border: 1px solid #c8d0ce;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.form-card > div {
+    /* background-color: aqua; */
+    box-sizing: border-box;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+/* TextField ------------------------------- */
+
+.auth-text-field {
+    box-sizing: border-box;
+    width: 300px;
+    height: 30px;
+    border: 1px solid #c8d0ce;
+    border-radius: 6px;
+    outline:0;
+    background-color: #FFFDFD;
+    font-size: 16px;
+    padding: 0 8px;
+    color: #1A1B25;
+}
+
+.auth-text-field:focus {
+    border: 1px solid #392061;
+}
+
+.auth-text-field-label {
+    box-sizing: border-box;
+    display: block;
+    /* background-color: chartreuse; */
+    width: 300px;
+    margin-bottom: 3px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1A1B25;
+}
+
+.submit-button {
+    /* display: block; */
+    width: 300px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px; 
+    border-radius: 15px;
+    background-color: #392061;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 2px;
+    vertical-align: middle;
+}
+
+.redirect-text {
+    color: #525252;
+    text-decoration: underline;
+    display: block;
+}
+
+.redirect-text:hover {
+    color: #392061;
+    text-decoration: underline;
+    margin-bottom: 0 !important;
+}
