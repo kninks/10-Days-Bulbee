@@ -9,7 +9,7 @@ const Description = () => {
     navigate('/summary')
   };
 
-  const productId = { param: '7140107a-5645-4cb8-b7b8-c659c61b4fdc' };
+  const productId = { param: 'd7b54064-7c0e-40f1-a394-63cfd1198eea' };
   const queryParam = new URLSearchParams(productId).toString();
 
   // const { data, isLoading, error} = useSwr(`http://localhost:4000/product/get?${queryParam}`, () => {
