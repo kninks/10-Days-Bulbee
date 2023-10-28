@@ -29,7 +29,7 @@ function App() {
         <Route path='/fooddrinks-page' element={<FoodDrinksPage />} />
         {/* <Route path='/confirm' element={ <OrderConfirmation /> }></Route> */}
       </Routes>
-      <Header />
+      {/* <Header /> */}
     </div>
   )
 }

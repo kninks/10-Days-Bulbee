@@ -48,11 +48,11 @@ export async function get_product(req) {
 
 export async function get_all_products() {
     try {
-        console.log('get_all_products function called');
+        // console.log('get_all_products function called');
         const database = client.db('productsDB');
-        const col = database.collection('product');
+        const col = database.collection('admin');
         const products = await col.find().toArray();
-       console.log(products);
+    //    console.log(products);
         return products;
     } catch(error) {
         return { status: false, result: error };

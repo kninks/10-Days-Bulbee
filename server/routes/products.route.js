@@ -101,29 +101,25 @@ route.get('/get', async (req, res) => {
     }
 })
 
-route.post('/add', async (req, res) => {
-    try {
-        const _out = await add_product(req.body);
-        return res.json(_out);
-    } catch(error) {
-        return res.json({ status: false, message: error });
-    }
-})
-
-route.get('/get', async (req, res) => {
-    try {
-        const param = req.query.param;
-        const _out = await get_product(param);
-
-        return res.json(_out)
-    } catch(error) {
-        return res.json({ status: false, message: error });
-    }
-})
-
 route.get('/get-all', async (req, res) => {
     try {
         const _out = await get_all_products();
+
+        for (const product of _out) {
+            const params = {
+                Bucket: bucketName,
+                Key: product.picture_url
+            }
+    
+            const command = new GetObjectCommand(params);
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+            console.log('aws_url', url)
+    
+            product.picture_url = url
+        }
+
+        console.log(_out)
+
         return res.json(_out);
     } catch(error) {
         return res.json({ status: false, message: error });
