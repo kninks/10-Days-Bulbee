@@ -9,7 +9,7 @@ const Description = () => {
     navigate('/summary')
   };
 
-  const productId = { param: '7140107a-5645-4cb8-b7b8-c659c61b4fdc' };
+  const productId = { param: '86f2addc-8387-4922-8afa-3610f231cc50' };
   const queryParam = new URLSearchParams(productId).toString();
 
   // const { data, isLoading, error} = useSwr(`http://localhost:4000/product/get?${queryParam}`, () => {
@@ -50,9 +50,9 @@ const Description = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       <Link to ='/' className='back-link'>Back</Link>
-      <h1>Description</h1>
+      <div className='content'>
       <div>
         <img src={product.picture_url} alt="Product Image" className="product-image" style={{ width: "100%", height: "100%" }}/>
       </div>
@@ -66,7 +66,9 @@ const Description = () => {
       <div className='description-text'>Description</div>
         <div className='product-description'>
         {product.description}
-        </div>
+      </div>
+      </div>
+
       <div className='product-quantity'>
         <div className='quantity-text'>Quantity</div>
         <div className='quantity-number'>
