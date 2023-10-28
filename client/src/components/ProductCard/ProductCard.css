@@ -1,0 +1,33 @@
+.product-card {
+    border: 1px solid #e1e1e1;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 10px 0;
+    text-align: center;
+    /* width: 167px; */
+    height: 217px;
+}
+  
+.product-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-name {
+    /* white-space: nowrap; */
+    overflow: hidden;         /* Ensures that overflowing text is hidden */
+    text-overflow: ellipsis;  /* Adds the "..." to the end for overflowing text */
+    /* width: 100%;        */
+}
+
+
+.thumbnail {
+    height: 17px;
+    width: 17px;
+    margin-left: 5px;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+}

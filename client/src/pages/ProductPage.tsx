@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCard/ProductCard';
+import Header from '../components/Header/Header';
+
+import '../earn.css'
+
 
 const ProductPage: React.FC = () => {
   const [products, setProducts] = useState([]);
@@ -18,16 +22,21 @@ const ProductPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="product-grid">
-      {products.map((product, index) => (
-        <ProductCard
-          key={index}
-          image={product.image}
-          name={`${product.name} ${index + 1}`}
-          price={product.bulb_price}
-        />
-      ))}
+    <div>
+      <Header/>
+      <div className="product-grid">
+        {products.map((product, index) => (
+          <ProductCard
+            key={index}
+            image={product.image}
+            name={`${product.name} ${index + 1}`}
+            price={product.bulb_price}
+          />
+        ))}
+      </div>
     </div>
+
+    
   );
 };
 

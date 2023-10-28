@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCard/ProductCard';
 
 const FoodDrinksPage: React.FC = () => {
   const [products, setProducts] = useState([]);

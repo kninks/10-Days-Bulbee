@@ -1,7 +1,7 @@
 import React from 'react';
 
-import '../earn.css';
-import LightBulbImg from "../assets/light-bulb.png"
+import './ProductCard.css';
+import LightBulbImg from '../../assets/light-bulb.png'
 
 interface ProductCardProps {
   name: string;
@@ -13,10 +13,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, price, picture_url }) =
   return (
     <div className="product-card">
       <img src={picture_url} alt={name} />
-      <h3>{name}</h3>
-      <div class = "price-container">
+      <div className="product-name">{name}</div>
+      <div className = "price-container">
         <p>{price}</p>
-        <img src={LightBulbImg} alt="รูปหลอดไฟ ไอสัส" class="thumbnail"></img>
+        <img src={LightBulbImg} alt="รูปหลอดไฟจ้า" className="thumbnail"></img>
       </div>
     </div>
   );

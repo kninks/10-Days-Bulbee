@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCard/ProductCard';
 
 const BeautyPage: React.FC = () => {
   const [products, setProducts] = useState([]);
 
 useEffect(() => {
-    fetch(`http://localhost:4000/products/get-by-category?category=Beauty`)
+    fetch(`http://localhost:4000/products/get-by-category?category=Beauty`)//--------------?
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -29,7 +29,7 @@ useEffect(() => {
       ))}
     </div>
   );
-  
+
 };
 
 export default BeautyPage;
