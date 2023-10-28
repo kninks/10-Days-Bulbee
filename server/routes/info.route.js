@@ -18,7 +18,7 @@ route.post('/submit', async (req, res) => {
         // console.log(req.body)
         // console.log('out', _out)
 
-        return res.json({ message: 'Text data received'})
+        return res.json(_out)
     } catch (error) {
         return res.json({ status: false, message: error });
     }

@@ -10,6 +10,8 @@ const Summary = () => {
 
   const [code, setCode] = useState('');
   const [discount, setDiscount] = useState(0)
+  const [shipping, setShipping] = useState(45)
+  const [total, setTotal] = useState(0)
 
   // const handleInputChange = (e: any) => {
   //   setCode(e.target.value);
@@ -25,13 +27,12 @@ const Summary = () => {
         },
         body: JSON.stringify({ code, sid })
       });
-      // console.log(response)
       
       if (response.ok) {
-        const yay = await response.json();
-        console.log(yay)
-        console.log(yay.amount)
-        setDiscount(yay.amount);
+        const data = await response.json();
+        console.log(data)
+        console.log(data.amount)
+        setDiscount(data.amount);
       } else {
         console.error('Request failed with status: ' + response.status);
       }
@@ -62,6 +63,10 @@ const Summary = () => {
       isRun = true
     }
   }, []);
+
+  useEffect(() => {
+    const calculate: number = parseFloat(product.bulb_price) + shipping - discount;    setTotal(calculate)
+  }, [discount, product.bulb_price, shipping]);
 
 
   return (
@@ -110,7 +115,7 @@ const Summary = () => {
       <div className='total-payment'>
         <div className='total-payment-left'>Total Payment</div>
         <div className='total-payment-right'>
-          1500<img src='light-bulb.png' className='bulb-png2'/>
+          {total}<img src='light-bulb.png' className='bulb-png2'/>
         </div>
       </div>
 

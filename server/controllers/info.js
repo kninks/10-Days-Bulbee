@@ -30,7 +30,7 @@ export async function discount_code(req) {
         for (const data of existed.discount) {
             if (data.code === req.code) {
                 const _out = { "amount": data.amount}
-                console.log('out', _out)
+                // console.log('out', _out)
                 const remove = await col.updateOne(ref, {$pull: {discount: data}})
                 if (remove.modifiedCount === 1) {
                     console.log('Discounted Succesfully')
