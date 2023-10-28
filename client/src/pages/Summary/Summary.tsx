@@ -38,8 +38,6 @@ const Summary = () => {
 
   const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
 
-  const [imageUrl, setImageUrl] = useState('');
-
   useEffect(() => {
     fetch(`http://localhost:4000/products/get?${queryParam}`, {
       method: 'GET',
@@ -50,18 +48,6 @@ const Summary = () => {
       .then((res) => res.json())
       .then((data) => setProduct(data)) 
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetch(`http://localhost:4000/s3/get?${queryParam}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((res) => res.text())
-      .then((data) => setImageUrl(data))
-      .catch((error) => console.log('Getting error at signed url', error));
   }, []);
 
   return (
