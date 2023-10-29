@@ -1,31 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './Description.css';
+import useSwr from "swr"
 
 const Description = () => {
   const navigate = useNavigate();
   const handleBuyNowClick = () => {
-    navigate('/summary')
+    navigate(`/summary?count=${count}`);
   };
 
-  const product = {
-    name: 'Oh My Tint',   
-    id: 'd80729a5-c736-4d50-8fec-c961c2ce5057',   
-    description: 'OH MY TINT โฉมใหม่ล่าสุด 💋ลิปเนื้อละมุนในตำนานกลับมาอีก    กครั้งแต่ราคาน่ารักเหมือนเดิม',
-    category: 'Beauty',   
-    picture_url: '',      
-    bulb_price: 99,       
-    quantity: 5
-  }
+  const productId = { param: '46ca6f33-cd6d-44a7-8078-0bd4e33e420d' };
+  const queryParam = new URLSearchParams(productId).toString();
 
-  // const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
+  // const { data, isLoading, error} = useSwr(`http://localhost:4000/product/get?${queryParam}`, () => {
+    
+  // })
 
-  // useEffect(() => {
-  //   fetch('http://localhost:4000/products/get?param=d80729a5-c736-4d50-8fec-c961c2ce5057')
-  //     .then((res) => res.json())
-  //     .then((data) => setProduct(data)) 
-  //     .catch((error) => console.log(error));
-  // }, []);
+  const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
+
+  useEffect(() => {
+    let isRun = false
+
+    fetch(`http://localhost:4000/products/get?${queryParam}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => setProduct(data))
+      .catch((error) => console.log('Getting error', error));
+
+    return () => {
+      isRun = true
+    }
+  }, []);
 
   const [count, setCount] = useState(0)
     const lowestCount = () => {
@@ -41,20 +50,27 @@ const Description = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       <Link to ='/' className='back-link'>Back</Link>
-      <h1>Description</h1>
+      <div className='content'>
+      <div>
+        <img src={product.picture_url} alt="Product Image" className="product-image" style={{ width: "100%", height: "100%" }}/>
+      </div>
       <div className='product-title'>
         {product.name}
       </div>
-      <div className='bulub-orice'>
+      <div className='bulb-price'>
         {product.bulb_price}
+        <img src='light-bulb.png' className='bulb-png'/>
       </div>
-      <div className='product-description'>
+      <div className='description-text'>Description</div>
+        <div className='product-description'>
         {product.description}
       </div>
+      </div>
+
       <div className='product-quantity'>
-        <p className='quantity-text'>Quantity</p>
+        <div className='quantity-text'>Quantity</div>
         <div className='quantity-number'>
           <button className='quantity-button' onClick={lowestCount}>-</button>
             {count}  

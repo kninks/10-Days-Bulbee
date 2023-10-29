@@ -1,43 +1,38 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { Routes, Route, Link, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css'
+import Home from './pages/Home/Home'
+import Description from './pages/Description/Description';
+import Summary from './pages/Summary/Summary';
+import Header from './components/Header/Header';
+import AdminAdd from './pages/AdminAdd/AdminAdd';
 import Login from './pages/Login'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Register from './pages/Register'
-import Home from './pages/Home'
-
-const router = createBrowserRouter([
-  {
-    path: "/home",
-    element: <Home />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path:'/register',
-    element: <Register />,
-  }
-]);
+import OrderConfirmation from './pages/OrderConfirmation/OrderConfirmation';
+import ProductPage from './pages/Product/ProductPage';
+import BeautyPage from './pages/Product/BeautyPage';
+import FashionPage from './pages/Product/FashionPage';
+import FoodDrinksPage from './pages/Product/FoodDrinksPage';
 
 function App() {
-    return (
-      <>
-        <RouterProvider router={router} />
-        {/* <Login /> */}
-        {/* <u>
-          <li><Link to='/login'>Login</Link> </li>
-          <li><Link to='/register'>Register</Link></li>
-        </u> */}
-        
-        {/* <Routes>
-          <Route path='/' element={ <Login /> } />
-          <Route path='/login' element={ <Login /> } />
-          <Route path='/login' element={ <Register /> } />
-        </Routes> */}
-      </>
-    )
+  return (
+    <div className="App">
+      <Routes>
+        <Route path='/home' element={ <Home /> }></Route>
+        <Route path='/login' element={ <Login /> }></Route>
+        <Route path='/register' element={ <Register /> }></Route>
+        <Route path='/description' element={ <Description /> }></Route>
+        <Route path='/adminadd' element={ <AdminAdd /> }></Route>
+        <Route path='/summary' element={ <Summary /> }></Route>
+        <Route path='/product-page' element={<ProductPage />} />
+        <Route path='/beauty-page' element={<BeautyPage />} />
+        <Route path='/fashion-page' element={<FashionPage />} />
+        <Route path='/fooddrinks-page' element={<FoodDrinksPage />} />
+        <Route path='/confirm' element={ <OrderConfirmation /> }></Route>
+      </Routes>
+      {/* <Header /> */}
+    </div>
+  )
 }
 
-export default App
+export default App;

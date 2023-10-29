@@ -1,0 +1,119 @@
+.banner {
+    width: auto;
+    min-height: 350px;
+    height: auto;
+    border: 1px solid #C8D0CE;
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin: 20px;
+  }
+
+  .section {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+  }
+  
+  .my-bulb {
+    width: 167px;
+    height: 70px;
+    border-radius: 15px;
+    border: 1px solid #C8D0CE;
+    background: #FFFDFD;
+    color: var(--black);
+    display: flex;
+    position: relative;
+  }
+
+  .my-purchase{
+    width: 167px;
+    height: 70px;
+    border-radius: 15px;
+    border: 1px solid #C8D0CE;
+    background: #FFFDFD;
+    color: var(--black);
+    display: flex;
+    position: relative;
+    margin-left: auto;
+
+  }
+  
+  .my-bulb > .bulb-icon, .my-purchase > .bag-icon {
+    width: 42px;
+    height: 42px;
+    padding-left: 18px;
+    padding-top: 13px;
+    padding-bottom: 15px;
+  }
+  
+  .my-bulb > h3 {
+    color: #1A1B25;
+    font-size: 12px;
+    font-style: normal;
+    padding-left: 15px;
+    position: relative;
+  }
+  
+  .my-bulb > h2 {
+    color: #1A1B25;
+    font-size: 20px;
+    font-style: normal;
+    padding-left: 75px;
+    padding-top: 15px;
+    position: absolute;
+  }
+  
+  .my-purchase > .text1 {
+    color: #1A1B25;
+    font-size: 16px;
+    font-style: normal;
+    padding-left: 10px;
+    position: relative;
+  }
+  
+  .my-purchase > .text2 {
+    color: #1A1B25;
+    font-size: 16px;
+    font-style: normal;
+    padding-left: 70px;
+    padding-top: 18px;
+    position: absolute;
+  }
+  
+  .category-header {
+    margin: 20px;
+    color: var(--black);
+  }
+  
+  .category-section {
+    margin: 20px;
+}
+  
+  .category {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 19px;
+    grid-row-gap: 20px;
+  }
+  
+  .banner-indicator {
+    display: flex;
+    margin-top: -10px;
+    justify-content: center;
+    justify-items: center;
+  }
+  
+  .dot {
+    height: 6px;
+    width: 6px;
+    background-color: #C8D0CE;
+    border-radius: 50%;
+    margin: 10px;
+    display: inline-block;
+  }

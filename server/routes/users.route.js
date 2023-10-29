@@ -1,13 +1,27 @@
-const route = require('express').Router();
-const { get_all_user, register, login } = require('../controllers/users')
+import express from 'express';
+const route = express.Router();
+import { get_one_user ,get_all_user, register, login } from '../controllers/users.js'
 
 // import { Router } from 'express';
 // const route = Router();
 // import { get_all_user, register, login } from '../controllers/users.js'
 
+route.get('/get_one', async (req, res) => {
+    try {
+        const param = req.query.param
+        // console.log(param)
+        const foundUsers = await get_one_user(param);
+        // console.log(foundUsers)
+        
+        return res.json(foundUsers);
+    } catch (error) {
+        return res.json({ status: false, message: error });
+    }
+})
+
 route.get('/get_all_user', async (req,res) => {
     try {
-        const foundUsers = get_all_user();
+        const foundUsers = await get_all_user();
         console.log("foundUsers");
         console.log(foundUsers);
         return res.json(foundUsers);
@@ -35,5 +49,4 @@ route.post('/login', async (req, res) => {
     }
 })
 
-module.exports = route;
-
+export default route;
