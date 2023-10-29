@@ -36,7 +36,7 @@ const Header = () => {
       </div>
       <div className='bulb-balance-top'>
         <img src='/light-bulb.png' className='balance-top-img' />
-        {bulb}
+        <p>{bulb}</p>
       </div>
     </div>
   );
