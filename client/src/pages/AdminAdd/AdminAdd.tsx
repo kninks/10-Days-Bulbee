@@ -9,7 +9,7 @@ interface UploadParams {
     description: string;
     category: string;
     quantity: number;
-    price: number
+    bulb_price: number
 }
 
 const AdminAdd = () => {
@@ -18,7 +18,7 @@ const AdminAdd = () => {
     const [description, setDescription] = useState('')
     const [selectedOption, setSelectedOption] = useState<string>('select an option');
     const [quantity, setQuantity] = useState(0)
-    const [price, setPrice] = useState(0)
+    const [bulb_price, setPrice] = useState(0)
     const [images, setImages] = useState<string[]>([]);
 
     const submit = async (event: React.FormEvent) => {
@@ -35,21 +35,28 @@ const AdminAdd = () => {
             formData.append('description', description);
             formData.append('category', selectedOption);
             formData.append('quantity', quantity.toString());
-            formData.append('price', price.toString());
+            formData.append('bulb_price', bulb_price.toString());
 
             try {
-                const response = await axios.post('http://localhost:4000/product/upload', formData, {
+                const response = await axios.post('http://localhost:4000/products/upload', formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data',
                   },
                 });
-        
-                if (response.data.status === 'success') {
-                  const imageUrl = response.data.imageUrl;
-                  console.log('File upload successful:', imageUrl);
-                  setImages([imageUrl, ...images]);
+
+                if (response.data.status) {
+                  setProduct('');
+                  setDescription('');
+                  setSelectedOption('select an option');
+                  setQuantity(0);
+                  setPrice(0);
+                  setFile(undefined);
+
+                  // const imageUrl = response.data.imageUrl;
+                  // console.log('File upload successful:', imageUrl);
+                  // setImages([imageUrl, ...images]);
                 } else {
-                  console.error('File upload failed');
+                  console.log('Upload failed')
                 }
               } catch (error) {
                 console.error('Error during the file upload:', error);
@@ -64,7 +71,7 @@ const AdminAdd = () => {
           setDescription(value);
         } else if (name === 'quantity') {
           setQuantity(parseInt(value) || 0);
-        } else if (name === 'price') {
+        } else if (name === 'bulb_price') {
           setPrice(parseInt(value) || 0);
         }
     }
@@ -94,9 +101,10 @@ const AdminAdd = () => {
             Category
         </div>
         <select value={selectedOption} onChange={handleCategoryChange} className='category-dropdown'>
+            <option value='' disabled hidden>Select an option</option>
             <option value='Beauty' className='category-option'>Beauty</option>
             <option value='Fashion' className='category-option'>Fashion</option>
-            <option value='FoodnDrinks' className='category-option'>Food & Drinks</option>
+            <option value='FoodDrinks' className='category-option'>Food & Drinks</option>
         </select>
         <div className='product-title'>
             <div className='product-title left'>
@@ -108,7 +116,7 @@ const AdminAdd = () => {
         </div>
         <div className='input-container'>
             <input type='text' name='quantity' className='two-input left2' value={quantity} onChange={handleInputChange} placeholder='quantity' required></input>
-            <input type='text' name='price' className='two-input right2' value={price} onChange={handleInputChange} placeholder='price' required></input>
+            <input type='text' name='bulb_price' className='two-input right2' value={bulb_price} onChange={handleInputChange} placeholder='price' required></input>
         </div>
         <div className='product-title'>
             Image

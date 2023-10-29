@@ -10,10 +10,11 @@ const Summary = () => {
   const [total, setTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const sid = "6660115021";
-  const id = "46ca6f33-cd6d-44a7-8078-0bd4e33e420d";
+  // const id = "46ca6f33-cd6d-44a7-8078-0bd4e33e420d";
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const id = params.get("id")
   const count = parseInt(params.get("count") || "0", 10); // Parse the count from URL or default to 0.
 
   //link to confirmation page and update bulbb ------------------------------------------
@@ -78,8 +79,10 @@ const Summary = () => {
   };
 
   //get product data ------------------------------------------
-  const productId = { param: id };
-  const queryParam = new URLSearchParams(productId).toString();
+  // const productId = { param: id };
+  // const queryParam = new URLSearchParams(productId).toString();
+  const queryParam = `param=${id}`;
+  const searchParams = new URLSearchParams(queryParam);
 
   const [product, setProduct] = useState<{
     name: string;
@@ -102,7 +105,7 @@ const Summary = () => {
   useEffect(() => {
     let isRun = false;
 
-    fetch(`http://localhost:4000/products/get?${queryParam}`, {
+    fetch(`http://localhost:4000/products/get?${searchParams}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
