@@ -6,7 +6,6 @@ const cors = require('cors');
 // import { createServer } from 'http';
 // import cors from 'cors';
 
-
 const app = express();
 const server = createServer(app);
 

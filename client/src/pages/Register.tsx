@@ -48,6 +48,7 @@ function Register() {
         postal_code: "",
         password: "",
     });
+    const [tryAgain, setTryAgain] = useState("no")
     
     const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
@@ -124,7 +125,7 @@ function Register() {
                         name="address"
                         value={formData.address}
                         onChange={handleFormChange}
-                        className='auth-text-field'
+                        className='auth-address-field'
                         // style={height: 300px}
                     />
                 </div>
@@ -147,6 +148,9 @@ function Register() {
                         onChange={handleFormChange}
                         className='auth-text-field'
                     />
+                </div>
+                <div className='not-auth-text'>
+                    {tryAgain}
                 </div>
                 <button type="submit" className='submit-button' >Register</button>
                 <Link to='/login' className='redirect-text'>Already have an account? Log in here</Link>

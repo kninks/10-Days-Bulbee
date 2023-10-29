@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import AuthContext from '../context/AuthProvider';
 
 import './Auth.css'
 
@@ -20,7 +21,7 @@ async function LoginReq({ sid, password }: FormData): Promise<any> {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(credentials)
-        })
+        });
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -42,8 +43,11 @@ function Login() {
         sid: "",
         password: "",
     });
+    const [tryAgain, setTryAgain] = useState("no")
     const [_, setCookies] = useCookies(["access_token"]);
     const navigate = useNavigate();
+
+    const { setAuth } = useContext(AuthContext);
 
     const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -93,6 +97,7 @@ function Login() {
                         <label htmlFor="sid" className='auth-text-field-label'>Student ID</label>
                         <input
                             type="text"
+                            id="sid"
                             name="sid"
                             value={formData.sid}
                             onChange={handleFormChange}
@@ -113,6 +118,9 @@ function Login() {
                             className='auth-text-field'
                             required
                         />
+                    </div>
+                    <div className='not-auth-text'>
+                        {tryAgain}
                     </div>
                     <button type="submit" className='submit-button'>Log in</button>
                         <Link to='/register' className='redirect-text'>Register for an account</Link>

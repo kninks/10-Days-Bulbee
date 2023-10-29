@@ -12,11 +12,11 @@ const client = new MongoClient(url)
 client.connect();
 
 const db = client.db('usersDB');
-const collection = db.collection('user');
+const userCollection = db.collection('user');
 
 async function get_all_user(req) {
     try {
-        const cursor = collection.find({})
+        const cursor = userCollection.find({})
         const allUsers = await cursor.toArray();
         console.log("------------------------------")
         console.log(allUsers)
@@ -32,7 +32,7 @@ async function get_all_user(req) {
 async function register(req) {
     try {
         let newUser = req.body;
-        const existedUser = await collection.findOne({sid:newUser.sid});
+        const existedUser = await userCollection.findOne({sid:newUser.sid});
 
         if (existedUser) {
             console.log("User already exists!");
@@ -44,7 +44,7 @@ async function register(req) {
             newUser.password = hashedPassword;
             console.log(newUser);
 
-            const insertedUser = await collection.insertOne(newUser);
+            const insertedUser = await userCollection.insertOne(newUser);
             console.log(insertedUser);
 
             return insertedUser;
@@ -59,7 +59,7 @@ async function register(req) {
 async function login(req) {
     try {
         const user = req.body;
-        const existedUser = await collection.findOne({sid: user.sid});
+        const existedUser = await userCollection.findOne({sid: user.sid});
 
         if (!existedUser) {
             console.log("User doesn't exist!");
