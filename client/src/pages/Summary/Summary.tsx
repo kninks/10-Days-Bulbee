@@ -17,10 +17,6 @@ const Summary = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const count = parseInt(params.get('count') || '0', 10); // Parse the count from URL or default to 0.
-
-  // const handleInputChange = (e: any) => {
-  //   setCode(e.target.value);
-  // }
   
   const handleSubmit = async () => {
     const sid = '6543222221';
@@ -69,13 +65,36 @@ const Summary = () => {
     }
   }, []);
 
+  const userSid = { param: '6438888821' };
+  const queryParam2 = new URLSearchParams(userSid).toString();
+
+  const [user, setUser] = useState<{first_name: string, last_name: string, address: string, postal_code: string, phone_number: string}>({first_name: "", last_name: "", address: "", postal_code: "", phone_number: ""});
+
+  useEffect(() => {
+    let isRun = false
+
+    fetch(`http://localhost:4000/auth/get_one?${queryParam2}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.log('Getting error', error));
+
+    return () => {
+      isRun = true
+    }
+  }, []);
+
+  
   useEffect(() => {
     const calSub: number = parseFloat(product.bulb_price) * count
     const calculate: number = parseFloat(calSub) + shipping - discount;    
     setTotal(calculate)
     setSubtotal(calSub)
   }, [discount, product.bulb_price, shipping]);
-
 
   return (
     <div>
@@ -114,7 +133,7 @@ const Summary = () => {
       </div>
       <div className='text-both'>
         <div className='text-both-sub'>Shipping</div>
-        <div className='text-both-sub'>45</div>
+        <div className='text-both-sub'>{shipping}</div>
       </div>
       <div className='text-both'>
         <div className='text-both-sub'>Discount</div>
@@ -133,10 +152,11 @@ const Summary = () => {
         Delivery Address
       </div>
       <div className='detail'>
-        Sasinapa (0xxxxxx)
+        {user.first_name} {user.last_name} ({user.phone_number})
       </div>
       <div className='detail'>
-        1234 Bangkok, TH
+        {user.address}
+        {user.postal_code}
       </div>
 
       <div className='seperate-line'></div>
@@ -148,8 +168,9 @@ const Summary = () => {
 
       <div className='footer'>
         <button className='confirm-button' onClick={handleConfirmClick}>Confirm</button>
-        {/* <div className='back-link'>
-          <Link to ='/description' >Cancel Order</Link></div> */}
+      <div className='back-link'>
+          <Link to ='/description' >Cancel Order</Link>
+      </div>
       </div>
     </div>
   )
