@@ -12,11 +12,13 @@ route.post('/insert', (req, res) => {
     }
 })
 
-route.post('/submit', (req, res) => {
+route.post('/submit', async (req, res) => {
     try {
-        const _out = discount_code(req.body)
+        const _out = await discount_code(req.body)
+        // console.log(req.body)
+        // console.log('out', _out)
 
-        return res.json({ message: 'Text data received'})
+        return res.json(_out)
     } catch (error) {
         return res.json({ status: false, message: error });
     }

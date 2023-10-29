@@ -6,10 +6,10 @@ import useSwr from "swr"
 const Description = () => {
   const navigate = useNavigate();
   const handleBuyNowClick = () => {
-    navigate('/summary')
+    navigate(`/summary?count=${count}`);
   };
 
-  const productId = { param: 'd7b54064-7c0e-40f1-a394-63cfd1198eea' };
+  const productId = { param: '46ca6f33-cd6d-44a7-8078-0bd4e33e420d' };
   const queryParam = new URLSearchParams(productId).toString();
 
   // const { data, isLoading, error} = useSwr(`http://localhost:4000/product/get?${queryParam}`, () => {
@@ -50,9 +50,9 @@ const Description = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       <Link to ='/' className='back-link'>Back</Link>
-      <h1>Description</h1>
+      <div className='content'>
       <div>
         <img src={product.picture_url} alt="Product Image" className="product-image" style={{ width: "100%", height: "100%" }}/>
       </div>
@@ -66,7 +66,9 @@ const Description = () => {
       <div className='description-text'>Description</div>
         <div className='product-description'>
         {product.description}
-        </div>
+      </div>
+      </div>
+
       <div className='product-quantity'>
         <div className='quantity-text'>Quantity</div>
         <div className='quantity-number'>
