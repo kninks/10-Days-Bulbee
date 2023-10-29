@@ -3,6 +3,19 @@ const url = 'mongodb+srv://bupbee:bulbeepassword@bulbeedb.oqjikje.mongodb.net/?r
 const client = new MongoClient(url)
 client.connect();
 
+export async function get_info(req) {
+    try {
+        const database = client.db('usersDB')
+        const col = database.collection('info')
+
+        const user = await col.findOne({ sid: req.sid })
+
+        return user
+    } catch(error) {
+        return { status: false, result: error}
+    }
+}
+
 export async function insert_discount(req) {
     try {
         const database = client.db('usersDB')
@@ -43,6 +56,34 @@ export async function discount_code(req) {
         console.log('Discount doesnt exist')
         
         return 0
+    } catch(error) {
+        return { status: false, result: error}
+    }
+}
+
+export async function update_bulb(req) {
+    try {
+        const database = client.db('usersDB')
+        const col = database.collection('info')
+
+        const ref = { sid: req.sid }
+        const user = await col.findOne(ref)
+
+        // console.log(user)
+        // console.log(user.bulb)
+        // console.log(req.total)
+
+        const calculate = parseFloat(user.bulb) - parseFloat(req.total);
+        console.log('calculate', calculate)
+
+        if (calculate >= 0) {
+            const updated = await col.updateOne(ref, { $set: {bulb: calculate}})
+            console.log('updated', updated)
+            return { status: true, result: 'success'}
+        } else {
+            return { status: false, result: 'not enough bulb'}
+        }
+
     } catch(error) {
         return { status: false, result: error}
     }

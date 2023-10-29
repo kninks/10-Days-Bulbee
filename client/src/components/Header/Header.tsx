@@ -1,7 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import './Header.css'
 
 const Header = () => {
+
+  const userSid = { param: "6438888821" };
+  const queryParam2 = new URLSearchParams(userSid).toString();
+
+  const [bulb, setBulb] = useState(0);
+
+  useEffect(() => {
+    let isRun = false;
+
+    fetch(`http://localhost:4000/info/get?${queryParam2}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setBulb(data.bulb))
+      .catch((error) => console.log("Getting error", error));
+
+    return () => {
+      isRun = true;
+    };
+  }, []);
   
   return (
     <div className="header">
@@ -13,7 +36,7 @@ const Header = () => {
       </div>
       <div className='bulb-balance-top'>
         <img src='/light-bulb.png' className='balance-top-img' />
-        <p>{10000}</p>
+        {bulb}
       </div>
     </div>
   );

@@ -69,3 +69,31 @@ export async function get_products_by_category(category) {
         return { status: false, result: error };
     }
 }
+
+export async function update_quantity(req) {
+    try {
+        const database = client.db('productsDB');
+        const col = database.collection('admin');
+        // console.log(req)
+
+        const ref = { id: req.id }
+        const product = await col.findOne(ref)
+
+        // console.log('product.quantity', product.quantity)
+        // console.log('req.quantity', req.count)
+
+        const calculate = parseFloat(product.quantity) - parseFloat(req.count)
+        // console.log('calculate', calculate)
+        const updated = await col.updateOne(ref, { $set: {quantity: calculate}})
+        // console.log(updated)
+        
+        if (updated.modifiedCount === 1) {
+            return { status: true, result: 'Update successfully'}
+        } else {
+            return { status: false, result: 'Error'}
+        }
+        
+    } catch(error) {
+        return { status: false, result: error} 
+    }
+}

@@ -6,33 +6,17 @@ import "./Description.css";
 const Description = () => {
   const navigate = useNavigate();
   const handleBuyNowClick = () => {
+    if (count > 0) {
     navigate(`/summary?count=${count}`);
+    } else {
+      alert('Quantity number must be selected')
+    }
   };
 
   const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
   const queryParam = new URLSearchParams(productId).toString();
 
-  // const { data, isLoading, error} = useSwr(`http://localhost:4000/product/get?${queryParam}`, () => {
-
-  // })
-
-  const [product, setProduct] = useState<{
-    name: string;
-    id: string;
-    description: string;
-    categorry: string;
-    picture_url: string;
-    bulb_price: number;
-    quantity: number;
-  }>({
-    name: "",
-    id: "",
-    description: "",
-    categorry: "",
-    picture_url: "",
-    bulb_price: 0,
-    quantity: 0,
-  });
+  const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
 
   useEffect(() => {
     let isRun = false;

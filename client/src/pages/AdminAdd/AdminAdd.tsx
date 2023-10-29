@@ -12,30 +12,6 @@ interface UploadParams {
     price: number
 }
 
-// async function postData({image, product, description, category, quantity, price}: UploadParams) {
-//     const formData = new FormData();
-//     formData.append("image", image)
-//     formData.append('name', product)
-//     formData.append('description', description)
-//     formData.append('category', selectedOption)
-//     formData.append('quantity', quantity.toString())
-//     formData.append('price', price.toString())
-
-    // console.log('Data to be sent to the server:', {
-    //     image,
-    //     product,
-    //     description,
-    //     category,
-    //     quantity,
-    //     price,
-    // });
-  
-//     const result = await axios.post('http://localhost:4000/s3/upload', formData, { headers: {'Content-Type': 'multipart/form-data'}})
-//     const imageURL = result.data.imageUrl;
-  
-//     return imageURL;
-//   }
-
 const AdminAdd = () => {
     const [file, setFile] = useState()
     const [product, setProduct] = useState('')
@@ -109,17 +85,17 @@ const AdminAdd = () => {
         <div className='product-title'>
             Product Name
         </div>
-            <input type='text' name='product' className='name-input' value={product} onChange={handleInputChange}></input>
+            <input type='text' name='product' className='name-input' value={product} onChange={handleInputChange} placeholder='name'></input>
         <div className='product-title'>
             Description
         </div>
-            <input type='text' name='description' className='description-input' value={description} onChange={handleInputChange} ></input>
+            <textarea name='description' className='description-input' value={description} onChange={handleInputChange} placeholder='description'></textarea>
         <div className='product-title'>
             Category
         </div>
         <select value={selectedOption} onChange={handleCategoryChange} className='category-dropdown'>
             <option value='Beauty' className='category-option'>Beauty</option>
-            <option value='Fasion' className='category-option'>Fasion</option>
+            <option value='Fashion' className='category-option'>Fashion</option>
             <option value='FoodnDrinks' className='category-option'>Food & Drinks</option>
         </select>
         <div className='product-title'>
@@ -131,8 +107,8 @@ const AdminAdd = () => {
             </div>
         </div>
         <div className='input-container'>
-            <input type='text' name='quantity' className='two-input left2' value={quantity} onChange={handleInputChange}></input>
-            <input type='text' name='price' className='two-input right2' value={price} onChange={handleInputChange}></input>
+            <input type='text' name='quantity' className='two-input left2' value={quantity} onChange={handleInputChange} placeholder='quantity'></input>
+            <input type='text' name='price' className='two-input right2' value={price} onChange={handleInputChange} placeholder='price'></input>
         </div>
         <div className='product-title'>
             Image

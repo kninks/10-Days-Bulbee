@@ -3,23 +3,58 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./Summary.css";
 
 const Summary = () => {
-  const navigate = useNavigate();
-  const handleConfirmClick = () => {
-    navigate("/confirm");
-  };
 
   const [code, setCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [shipping, setShipping] = useState(45);
   const [total, setTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
+  const sid = "6660115021";
+  const id = "46ca6f33-cd6d-44a7-8078-0bd4e33e420d";
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const count = parseInt(params.get("count") || "0", 10); // Parse the count from URL or default to 0.
 
+  //link to confirmation page and update bulbb ------------------------------------------
+  const navigate = useNavigate();
+  const handleConfirmClick = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/info/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ total, sid }),
+      });
+
+      const data = await response.json()
+
+      if (data.status) {
+        const response2 = await fetch("http://localhost:4000/products/update_quantity", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ count, id }),
+      })
+        const data2 = await response2.json();
+        if (data2.status) {
+          navigate(`/confirm?count=${count}&total=${total}`);
+        } else {
+          console.log('Error occur')
+        }
+      } else {
+        // console.log("Not enough bulb");
+        return alert('Not enough bulb')
+      }
+    } catch (error) {
+      console.error("Error sending text data:", error);
+    }
+  };
+
+  //deal with discount ------------------------------------------
   const handleSubmit = async () => {
-    const sid = "6543222221";
     try {
       const response = await fetch("http://localhost:4000/info/submit", {
         method: "POST",
@@ -42,14 +77,15 @@ const Summary = () => {
     }
   };
 
-  const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
+  //get product data ------------------------------------------
+  const productId = { param: id };
   const queryParam = new URLSearchParams(productId).toString();
 
   const [product, setProduct] = useState<{
     name: string;
     id: string;
     description: string;
-    categorry: string;
+    category: string;
     picture_url: string;
     bulb_price: number;
     quantity: number;
@@ -57,7 +93,7 @@ const Summary = () => {
     name: "",
     id: "",
     description: "",
-    categorry: "",
+    category: "",
     picture_url: "",
     bulb_price: 0,
     quantity: 0,
@@ -81,7 +117,8 @@ const Summary = () => {
     };
   }, []);
 
-  const userSid = { param: "6438888821" };
+  //get user data ------------------------------------------
+  const userSid = { param: sid };
   const queryParam2 = new URLSearchParams(userSid).toString();
 
   const [user, setUser] = useState<{
@@ -116,6 +153,7 @@ const Summary = () => {
     };
   }, []);
 
+  //set total cost ------------------------------------------
   useEffect(() => {
     const calSub: number = parseFloat(product.bulb_price) * count;
     const calculate: number = parseFloat(calSub) + shipping - discount;
