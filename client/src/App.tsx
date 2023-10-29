@@ -17,6 +17,7 @@ import FoodDrinksPage from './pages/Product/FoodDrinksPage';
 function App() {
   return (
     <div className="App">
+      <Header />
       <Routes>
         <Route path='/home' element={ <Home /> }></Route>
         <Route path='/login' element={ <Login /> }></Route>
@@ -30,7 +31,6 @@ function App() {
         <Route path='/fooddrinks-page' element={<FoodDrinksPage />} />
         {/* <Route path='/confirm' element={ <OrderConfirmation /> }></Route> */}
       </Routes>
-      {/* <Header /> */}
     </div>
   )
 }
