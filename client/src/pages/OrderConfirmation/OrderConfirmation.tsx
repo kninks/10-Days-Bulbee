@@ -1,20 +1,57 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./OrderConfirmation.css";
 import BackToHome from "../../components/BackToHome/BackToHome";
 
 interface Products {
   image: string;
   name: string;
-  price: number;
-  item: number | undefined;
+  total: number;
+  count: number | undefined;
 }
 
-function renderItemsCount(props: Products) {
-  const { item } = props;
-  const itemText = item === 1 ? "Item" : "Items";
-  return `${item} ${itemText}`;
-}
+function OrderConfirmation() {
 
-function OrderConfirmation({image, name, price, item}: Products) {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const count = parseInt(params.get("count") || "0", 10); // Parse the count from URL or default to 0.
+  const total = parseInt(params.get("total") || "0", 10)
+
+  const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
+  const queryParam = new URLSearchParams(productId).toString();
+
+  const [product, setProduct] = useState<{
+    name: string;
+    picture_url: string;
+  }>({
+    name: "",
+    picture_url: "",
+  });
+
+  useEffect(() => {
+    let isRun = false;
+
+    fetch(`http://localhost:4000/products/get?${queryParam}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setProduct(data))
+      .catch((error) => console.log("Getting error", error));
+
+    return () => {
+      isRun = true;
+    };
+  }, []);
+
+  function renderItemsCount(props: Products) {
+    const { count } = props;
+    const itemText = count === 1 ? "Item" : "Items";
+    return `${count} ${itemText}`;
+  }
+
   return (
     <div className="order-confirmed-section">
       <div className="confirm-pic">
@@ -31,22 +68,22 @@ function OrderConfirmation({image, name, price, item}: Products) {
         <h2>My Order</h2>
         <div className="my-order-box">
           <div className="product-img">
-            <img src={image} />
+            <img src={product.picture_url} />
           </div>
-          <p className="product-name">{name}</p>
+          <p className="product-name">{product.name}</p>
           <div className="product-items">
             <p>{renderItemsCount({
-              item,
+              count,
               image: "",
               name: "",
-              price: 0
+              total: 0
             })}</p>
           </div>
           <div className="product-view-details">
             <p><u>View Details</u></p>
           </div>
           <div className="product-price">
-            <p>{price}</p>
+            <p>{total}</p>
             <img src="./light-bulb.png" className="bulb"/>
           </div>
         </div>

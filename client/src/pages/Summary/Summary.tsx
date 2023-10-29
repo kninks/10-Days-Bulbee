@@ -5,7 +5,7 @@ import "./Summary.css";
 const Summary = () => {
   const navigate = useNavigate();
   const handleConfirmClick = () => {
-    navigate("/confirm");
+    navigate(`/confirm?count=${count}&total=${total}`);
   };
 
   const [code, setCode] = useState("");
@@ -49,7 +49,7 @@ const Summary = () => {
     name: string;
     id: string;
     description: string;
-    categorry: string;
+    category: string;
     picture_url: string;
     bulb_price: number;
     quantity: number;
@@ -57,7 +57,7 @@ const Summary = () => {
     name: "",
     id: "",
     description: "",
-    categorry: "",
+    category: "",
     picture_url: "",
     bulb_price: 0,
     quantity: 0,
