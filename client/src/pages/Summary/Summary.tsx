@@ -3,10 +3,6 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./Summary.css";
 
 const Summary = () => {
-  const navigate = useNavigate();
-  const handleConfirmClick = () => {
-    navigate(`/confirm?count=${count}&total=${total}`);
-  };
 
   const [code, setCode] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -18,6 +14,31 @@ const Summary = () => {
   const params = new URLSearchParams(location.search);
   const count = parseInt(params.get("count") || "0", 10); // Parse the count from URL or default to 0.
 
+  //link to confirmation page and update bulbb ------------------------------------------
+  const navigate = useNavigate();
+  const handleConfirmClick = async () => {
+    const sid = "6543222221";
+    try {
+      const response = await fetch("http://localhost:4000/info/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ total, sid }),
+      });
+      const data = await response.json()
+
+      if (data.status) {
+        navigate(`/confirm?count=${count}&total=${total}`);
+      } else {
+        console.log("Not enough bulb");
+      }
+    } catch (error) {
+      console.error("Error sending text data:", error);
+    }
+  };
+
+  //deal with discount ------------------------------------------
   const handleSubmit = async () => {
     const sid = "6543222221";
     try {
@@ -42,6 +63,7 @@ const Summary = () => {
     }
   };
 
+  //get product data ------------------------------------------
   const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
   const queryParam = new URLSearchParams(productId).toString();
 
@@ -81,6 +103,7 @@ const Summary = () => {
     };
   }, []);
 
+  //get user data ------------------------------------------
   const userSid = { param: "6438888821" };
   const queryParam2 = new URLSearchParams(userSid).toString();
 
@@ -116,6 +139,7 @@ const Summary = () => {
     };
   }, []);
 
+  //set total cost ------------------------------------------
   useEffect(() => {
     const calSub: number = parseFloat(product.bulb_price) * count;
     const calculate: number = parseFloat(calSub) + shipping - discount;
