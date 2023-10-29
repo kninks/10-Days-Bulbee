@@ -9,6 +9,8 @@ const Summary = () => {
   const [shipping, setShipping] = useState(45);
   const [total, setTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
+  const sid = "6660115021";
+  const id = "46ca6f33-cd6d-44a7-8078-0bd4e33e420d";
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -17,7 +19,6 @@ const Summary = () => {
   //link to confirmation page and update bulbb ------------------------------------------
   const navigate = useNavigate();
   const handleConfirmClick = async () => {
-    const sid = "6543222221";
     try {
       const response = await fetch("http://localhost:4000/info/update", {
         method: "POST",
@@ -26,12 +27,26 @@ const Summary = () => {
         },
         body: JSON.stringify({ total, sid }),
       });
+
       const data = await response.json()
 
       if (data.status) {
-        navigate(`/confirm?count=${count}&total=${total}`);
+        const response2 = await fetch("http://localhost:4000/products/update_quantity", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ count, id }),
+      })
+        const data2 = await response2.json();
+        if (data2.status) {
+          navigate(`/confirm?count=${count}&total=${total}`);
+        } else {
+          console.log('Error occur')
+        }
       } else {
-        console.log("Not enough bulb");
+        // console.log("Not enough bulb");
+        return alert('Not enough bulb')
       }
     } catch (error) {
       console.error("Error sending text data:", error);
@@ -40,7 +55,6 @@ const Summary = () => {
 
   //deal with discount ------------------------------------------
   const handleSubmit = async () => {
-    const sid = "6543222221";
     try {
       const response = await fetch("http://localhost:4000/info/submit", {
         method: "POST",
@@ -64,7 +78,7 @@ const Summary = () => {
   };
 
   //get product data ------------------------------------------
-  const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
+  const productId = { param: id };
   const queryParam = new URLSearchParams(productId).toString();
 
   const [product, setProduct] = useState<{
@@ -104,7 +118,7 @@ const Summary = () => {
   }, []);
 
   //get user data ------------------------------------------
-  const userSid = { param: "6438888821" };
+  const userSid = { param: sid };
   const queryParam2 = new URLSearchParams(userSid).toString();
 
   const [user, setUser] = useState<{

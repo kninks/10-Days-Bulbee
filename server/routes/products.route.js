@@ -7,7 +7,7 @@ import { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } fro
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from 'crypto';
 
-import { add_product, get_product, get_all_products, get_products_by_category } from '../controllers/products.js'
+import { add_product, get_product, get_all_products, get_products_by_category, update_quantity } from '../controllers/products.js'
 
 import dotenv from 'dotenv';
 dotenv.config()
@@ -133,6 +133,18 @@ route.get('/get-by-category', async (req, res) => {
 
         return res.json(productsByCategory);
     } catch(error) {
+        return res.json({ status: false, message: error });
+    }
+})
+
+route.post('/update_quantity', async(req, res) => {
+    try {
+        const _out = await update_quantity(req.body)
+        // console.log('body', req.body)
+        // console.log('out', _out)
+
+        return res.json(_out)
+    } catch (error) {
         return res.json({ status: false, message: error });
     }
 })
