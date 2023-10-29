@@ -1,0 +1,35 @@
+GET http://127.0.0.1:4000
+
+###
+
+GET http://127.0.0.1:4000/users
+
+###
+
+POST http://127.0.0.1:4000/users/register
+Content-Type: application/json
+
+{
+    "address": "thailand",
+    "first_name": "h",
+    "last_name": "h",
+    "password": "testtest",
+    "postal_code": "10220",
+    "sid": "6438888821",
+}
+
+###
+
+POST http://127.0.0.1:4000/users/login
+Content-Type: application/json
+
+{
+    "sid": "643xxxxx21",
+    "password": "password"
+}
+
+
+###
+
+GET http://127.0.0.1:4000/users/register
+ 

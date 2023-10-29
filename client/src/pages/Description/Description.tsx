@@ -21,7 +21,7 @@ const Description = () => {
   useEffect(() => {
     let isRun = false
 
-    fetch(`http://localhost:4000/product/get?${queryParam}`, {
+    fetch(`http://localhost:4000/products/get?${queryParam}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

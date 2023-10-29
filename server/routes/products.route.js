@@ -8,7 +8,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from 'crypto';
 import sharp from 'sharp';
 
-import { add_product, get_product } from '../controllers/products.js'
+import { add_product, get_product, get_all_products, get_products_by_category } from '../controllers/products.js'
 
 import dotenv from 'dotenv';
 dotenv.config()
@@ -96,6 +96,43 @@ route.get('/get', async (req, res) => {
         // console.log(product)
     
         return res.json(product);
+    } catch(error) {
+        return res.json({ status: false, message: error });
+    }
+})
+
+route.get('/get-all', async (req, res) => {
+    try {
+        const _out = await get_all_products();
+
+        for (const product of _out) {
+            const params = {
+                Bucket: bucketName,
+                Key: product.picture_url
+            }
+    
+            const command = new GetObjectCommand(params);
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+            console.log('aws_url', url)
+    
+            product.picture_url = url
+        }
+
+        console.log(_out)
+
+        return res.json(_out);
+    } catch(error) {
+        return res.json({ status: false, message: error });
+    }
+})
+
+route.get('/get-by-category', async (req, res) => {
+    try {
+        const category = req.query.category;
+        console.log(category);
+        const productsByCategory = await get_products_by_category(category);
+
+        return res.json(productsByCategory);
     } catch(error) {
         return res.json({ status: false, message: error });
     }

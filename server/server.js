@@ -13,8 +13,20 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 import products_routes from '../server/routes/products.route.js'
 import info_routes from '../server/routes/info.route.js'
-app.use('/product', products_routes)
+import users_routes from '../server/routes/users.route.js'
+
+app.use('/products', products_routes)
 app.use('/info', info_routes)
+app.use('/auth', users_routes)
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send(`Internal Server Error: ${err.message}`);
+});
+
+app.get('/', (req, res) => {
+    res.send('API connected');
+});
 
 //Run Server -------------------------------------------------
 const PORT = 4000; 
