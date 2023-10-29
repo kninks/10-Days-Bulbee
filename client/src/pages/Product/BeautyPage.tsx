@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Header from '../../components/Header/Header';
+import { useNavigate, Link } from 'react-router-dom'
 
 import './ProductPage.css'
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;700&display=swap" rel="stylesheet"></link>
@@ -24,11 +25,12 @@ useEffect(() => {
   return (
     <div>
       {/* <Header/> */}
+      <Link to ='/home' className='back-link'>Back</Link>
       <div className="product-grid">
         {products.map((product, index) => (
           <ProductCard
             key={index}
-            image={product.image}
+            picture_url={product.picture_url}
             name={`${product.name} ${index + 1}`}
             price={product.bulb_price}
           />

@@ -109,14 +109,12 @@ route.get('/get-all', async (req, res) => {
                 Bucket: bucketName,
                 Key: product.picture_url
             }
-    
             const command = new GetObjectCommand(params);
             const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
             console.log('aws_url', url)
     
             product.picture_url = url
         }
-
         // console.log(_out)
 
         return res.json(_out);
@@ -130,6 +128,18 @@ route.get('/get-by-category', async (req, res) => {
         const category = req.query.category;
         console.log(category);
         const productsByCategory = await get_products_by_category(category);
+
+        for (const product of productsByCategory) {
+            const params = {
+                Bucket: bucketName,
+                Key: product.picture_url
+            }
+            const command = new GetObjectCommand(params);
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+            console.log('aws_url', url)
+    
+            product.picture_url = url
+        }
 
         return res.json(productsByCategory);
     } catch(error) {

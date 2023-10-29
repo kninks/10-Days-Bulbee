@@ -62,7 +62,7 @@ export async function get_all_products() {
 export async function get_products_by_category(category) {
     try {
         const database = client.db('productsDB');
-        const col = database.collection('product');
+        const col = database.collection('admin');
         const products = await col.find({ category: category }).toArray();
         return products;
     } catch (error) {
