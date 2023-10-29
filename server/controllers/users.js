@@ -14,6 +14,18 @@ client.connect();
 const db = client.db('usersDB');
 const collection = db.collection('user');
 
+export async function get_one_user(req) {
+    try {
+        const ref = { sid: req }
+        const user = collection.findOne(ref, { projection: { _id: 0}})
+        // console.log(user)
+
+        return user
+    } catch (error) {
+        return { status: false, result: error}
+    }
+}
+
 export async function get_all_user(req) {
     try {
         const cursor = collection.find({})
