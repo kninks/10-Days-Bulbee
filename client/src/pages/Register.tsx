@@ -34,7 +34,7 @@ async function RegisterReq({
   console.log(req);
 
   try {
-    const response = await fetch("http://127.0.0.1:4000/auth/register", {
+    const response = await fetch("http://localhost:4000/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,6 +94,7 @@ function Register() {
 
   return (
     <div className="register-page">
+      <Link to='/' className='back'>Back Home</Link>
       <div className="bulbee">Bulbee</div>
       <div className="auth-title">Create an Account</div>
       <form onSubmit={handleSubmit}>

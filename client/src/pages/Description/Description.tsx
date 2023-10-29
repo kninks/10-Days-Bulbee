@@ -7,18 +7,20 @@ const Description = () => {
   const handleBuyNowClick = () => {
     const token = window.localStorage.getItem("access_token")
     if (!token) {
-      alert("ok")
+      alert("Login before proceeds to next page")
     } else {
-      alert("kk")
-      navigate(`/summary?id=${id}&count=${count}`);
+      if (count > 0) {
+        navigate(`/summary?id=${id}&count=${count}`);
+      } else {
+        alert("Select quantity before proceeds to next page")
+      }
     }
-    
   };
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const id = params.get("id")
-  console.log(id)
+  // console.log(id)
 
   const queryParam = `param=${id}`;
   const searchParams = new URLSearchParams(queryParam);

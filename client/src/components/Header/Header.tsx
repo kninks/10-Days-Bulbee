@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import './Header.css'
-
-
 
 const Header = () => {
 
@@ -10,7 +9,7 @@ const Header = () => {
   useEffect(() => {
     try {
       const token = window.localStorage.getItem("access_token")
-      const response = fetch(`http://127.0.0.1:4000/auth/get_user` , {
+      const response = fetch(`http://localhost:4000/auth/get_user` , {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,8 +27,8 @@ const Header = () => {
     }
   },[bulb])
 
-  const userSid = { param: "6438888821" };
-  const queryParam2 = new URLSearchParams(userSid).toString();
+  // const userSid = { param: "6438888821" };
+  // const queryParam2 = new URLSearchParams(userSid).toString();
 
 
   // useEffect(() => {
@@ -53,7 +52,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="profile">
-        <img src="/profile-icon.png" className="profile" />
+        <Link to='/login'><img src="/profile-icon.png" className="profile" /></Link>
       </div>
       <div className='bulbee-logo'>
         <p>Bulbee</p>
