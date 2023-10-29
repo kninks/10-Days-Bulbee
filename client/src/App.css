@@ -1,7 +1,7 @@
 #root {
   width: 100%;
   height: auto;
-  min-height: 800px;
+  min-height: 750px;
   background: #FFFDFD;
   background: var(--white);
   font-family: Poppins, sans-serif;

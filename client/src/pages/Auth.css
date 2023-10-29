@@ -1,19 +1,30 @@
+.login-page {
+    background-color: var(--purple);
+    height: 750px;
+}
+
+.register-page {
+    background-color: var(--purple);
+    height: 100%;
+}
+
 .bulbee {
-    /* height: 72px; */
+    color: var(--white);
     font-size: 48px;
     font-weight: 700;
     line-height: 72px;
-    padding: 5px;
-    /* background-color: aquamarine; */
+    padding-top: 80px;
+    text-align: center;
 }
 
 .auth-title {
+    color: var(--white);
     font-size: 24px;
+    text-align: center;
     font-weight: 700;
-    line-height: 36px;
     padding: 5px;
+    margin-top: 8px;
     margin-bottom: 20px;
-    /* background-color: rebeccapurple; */
 }
 
 .form-card {
@@ -21,7 +32,8 @@
     background-color: #FFFDFD;
     border: 1px solid #c8d0ce;
     border-radius: 15px;
-    padding: 20px;
+    margin: 20px;
+    padding: 26px;
     text-align: center;
 }
 
@@ -36,7 +48,7 @@
 
 .auth-text-field {
     box-sizing: border-box;
-    width: 300px;
+    width: auto;
     height: 30px;
     border: 1px solid #c8d0ce;
     border-radius: 6px;
@@ -54,7 +66,6 @@
 .auth-text-field-label {
     box-sizing: border-box;
     display: block;
-    /* background-color: chartreuse; */
     width: 300px;
     margin-bottom: 3px;
     text-align: left;
@@ -78,6 +89,7 @@
 }
 
 .redirect-text {
+    font-size: 14px;
     color: #525252;
     text-decoration: underline;
     display: block;
