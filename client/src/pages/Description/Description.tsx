@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 import './Description.css';
-import useSwr from "swr"
 
 const Description = () => {
   const navigate = useNavigate();
   const handleBuyNowClick = () => {
-    navigate(`/summary?id=${id}&count=${count}`);
+    const token = window.localStorage.getItem("access_token")
+    if (!token) {
+      alert("ok")
+    } else {
+      alert("kk")
+      navigate(`/summary?id=${id}&count=${count}`);
+    }
+    
   };
 
   const location = useLocation();

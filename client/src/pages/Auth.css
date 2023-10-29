@@ -63,6 +63,25 @@
     border: 1px solid #392061;
 }
 
+.auth-address-field {
+    box-sizing: border-box;
+    width: 300px;
+    height: 100px;
+    border: 1px solid #c8d0ce;
+    border-radius: 6px;
+    outline:0;
+    background-color: #FFFDFD;
+    font-size: 16px;
+    padding: 0 8px;
+    color: #1A1B25;
+    justify-content: start;
+    text-overflow: wrap;
+}
+
+.auth-address-field:focus {
+    border: 1px solid #392061;
+}
+
 .auth-text-field-label {
     box-sizing: border-box;
     display: block;
@@ -74,11 +93,16 @@
     color: #1A1B25;
 }
 
+.not-auth-text {
+    color: red;
+    text-align: start;
+    /* background-color: aqua; */
+}
+
 .submit-button {
     /* display: block; */
     width: 300px;
     height: 40px;
-    margin-top: 10px;
     margin-bottom: 10px; 
     border-radius: 15px;
     background-color: #392061;

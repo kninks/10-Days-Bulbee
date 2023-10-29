@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { ChangeEvent, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 
 import "./Auth.css";
 
@@ -55,35 +55,42 @@ async function RegisterReq({
 }
 
 function Register() {
-  const [formData, setFormData] = useState<FormData>({
-    first_name: "",
-    last_name: "",
-    sid: "",
-    phone_number: "",
-    address: "",
-    postal_code: "",
-    password: "",
-  });
+    const [formData, setFormData] = useState<FormData>({
+        first_name: "",
+        last_name: "",
+        sid: "",
+        phone_number: "",
+        address: "",
+        postal_code: "",
+        password: "",
+    });
+    const [tryAgain, setTryAgain] = useState("")
+    const navigate = useNavigate();
+    
+    const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
 
-  const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+            const response = await RegisterReq(formData);
+            console.log(response);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      const response = await RegisterReq(formData);
-      console.log("response");
-      console.log(response);
-    } catch (error) {
-      console.error("Error:", error);
+            if (response.status) {
+                alert(response.result)
+                navigate('/login')
+            } else {
+                setTryAgain(response.result)
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
-  };
 
   return (
     <div className="register-page">
@@ -102,6 +109,7 @@ function Register() {
               onChange={handleFormChange}
               placeholder="Enter your first name"
               className="auth-text-field"
+              required
             />
           </div>
           <div>
@@ -115,6 +123,7 @@ function Register() {
               onChange={handleFormChange}
               placeholder="Enter your last name"
               className="auth-text-field"
+              required
             />
           </div>
           <div>
@@ -127,6 +136,7 @@ function Register() {
               value={formData.sid}
               onChange={handleFormChange}
               className="auth-text-field"
+              required
             />
           </div>
           <div>
@@ -139,6 +149,7 @@ function Register() {
               value={formData.phone_number}
               onChange={handleFormChange}
               className="auth-text-field"
+              required
             />
           </div>
           <div>
@@ -151,6 +162,7 @@ function Register() {
               value={formData.address}
               onChange={handleFormChange}
               className="auth-text-field"
+              required
               // style={height: 300px}
             />
           </div>
@@ -164,6 +176,7 @@ function Register() {
               value={formData.postal_code}
               onChange={handleFormChange}
               className="auth-text-field"
+              required
             />
           </div>
           <div>
@@ -176,7 +189,11 @@ function Register() {
               value={formData.password}
               onChange={handleFormChange}
               className="auth-text-field"
+              required
             />
+          </div>
+          <div className='not-auth-text'>
+                {tryAgain}
           </div>
           <button type="submit" className="submit-button">
             Register

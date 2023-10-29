@@ -44,6 +44,7 @@
   }
   
   .bulb-balance-top > p {
+    color: var(--black);
     font-size: 14px;
     font-weight: 700;
     margin-left: 5px;
