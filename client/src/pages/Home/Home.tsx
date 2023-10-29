@@ -1,7 +1,14 @@
 import Category from "../../components/Category/Category";
 import './Home.css'
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+//   const Category = ({ category: any, path }) => (
+//     <div className="category">
+//       <Link to={path}>{category}</Link>
+// ]    </div>
+//   );
+
   return (
     <div className="homepage">
       <div className="banner">
@@ -30,10 +37,10 @@ const Home = () => {
       </div>
       <div className="category-section">
         <div className="category">
-          <Category category="All Products" items={150}/>
-          <Category category="Fashion" items={30}/>
-          <Category category="Beauty" items={50}/>
-          <Category category="Food & Drinks" items={70}/>
+          <Link to='/product-page'><Category category="All Products" items={150} /></Link>
+          <Link to='/fashion-page' ><Category category="Fashion" items={30} /></Link>
+          <Link to='beauty-page'><Category category="Beauty" items={50}  /></Link>
+          <Link to='/fooddrinks-page'><Category category="Food & Drinks" items={70}  /></Link>
         </div>
       </div>
     </div>

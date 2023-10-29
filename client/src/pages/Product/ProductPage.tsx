@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Header from '../../components/Header/Header';
+<<<<<<< HEAD
 import { useNavigate, Link } from 'react-router-dom'
+=======
+import { Link } from 'react-router-dom';
+
+>>>>>>> merge
 import './ProductPage.css'
 
 
@@ -17,7 +22,7 @@ const ProductPage: React.FC = () => {
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
-//        console.log(products)
+       console.log(products)
       })
       .catch((error) => {
         console.error('Error fetching product data:', error);
@@ -27,11 +32,20 @@ const ProductPage: React.FC = () => {
   return (
     <div>
       {/* <Header/> */}
+<<<<<<< HEAD
       <Link to ='/home' className='back-link'>Back</Link>
+=======
+      <Link to ='/' className='back-link'>Back</Link>
+      <div className='header'>All Products</div>
+>>>>>>> merge
       <div className="product-grid">
         {products.map((product, index) => (
           <ProductCard
             key={index}
+<<<<<<< HEAD
+=======
+            id={product.id}
+>>>>>>> merge
             picture_url={product.picture_url}
             name={`${product.name} ${index + 1}`}
             price={product.bulb_price}

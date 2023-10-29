@@ -7,7 +7,7 @@ import { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } fro
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import crypto from 'crypto';
 
-import { add_product, get_product, get_all_products, get_products_by_category } from '../controllers/products.js'
+import { add_product, get_product, get_all_products, get_products_by_category, update_quantity } from '../controllers/products.js'
 
 import dotenv from 'dotenv';
 dotenv.config()
@@ -62,16 +62,16 @@ route.post('/upload', upload.single('image'), async (req, res) => {
             description: req.body.description,
             category: req.body.category,
             quantity: req.body.quantity,
-            price: req.body.price,
-            image: imageName
+            bulb_price: req.body.bulb_price,
+            picture_url: imageName
         }
 
         const uploadToMongo = await add_product(productData)
         // console.log('uploadtomongo', uploadToMongo)
 
-        return {status: true, result: uploadToMongo};
+        return res.json(uploadToMongo)
     } catch (error) {
-        console.error('Error uploading to S3:', error);
+        return res.json({ status: false, result: error})
     }
 })
 
@@ -111,7 +111,7 @@ route.get('/get-all', async (req, res) => {
             }
             const command = new GetObjectCommand(params);
             const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-            console.log('aws_url', url)
+            // console.log('aws_url', url)
     
             product.picture_url = url
         }
@@ -127,22 +127,51 @@ route.get('/get-by-category', async (req, res) => {
     try {
         const category = req.query.category;
         console.log(category);
-        const productsByCategory = await get_products_by_category(category);
+        const _out = await get_products_by_category(category);
 
+<<<<<<< HEAD
         for (const product of productsByCategory) {
+=======
+        for (const product of _out) {
+>>>>>>> merge
             const params = {
                 Bucket: bucketName,
                 Key: product.picture_url
             }
+<<<<<<< HEAD
             const command = new GetObjectCommand(params);
             const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
             console.log('aws_url', url)
+=======
+    
+            const command = new GetObjectCommand(params);
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+            // console.log('aws_url', url)
+>>>>>>> merge
     
             product.picture_url = url
         }
 
+<<<<<<< HEAD
         return res.json(productsByCategory);
+=======
+        // console.log(_out)
+
+        return res.json(_out);
+>>>>>>> merge
     } catch(error) {
+        return res.json({ status: false, message: error });
+    }
+})
+
+route.post('/update_quantity', async(req, res) => {
+    try {
+        const _out = await update_quantity(req.body)
+        // console.log('body', req.body)
+        // console.log('out', _out)
+
+        return res.json(_out)
+    } catch (error) {
         return res.json({ status: false, message: error });
     }
 })

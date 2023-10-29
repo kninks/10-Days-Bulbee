@@ -1,9 +1,11 @@
+import Home from "../../pages/Home/Home";
 import "./BackToHome.css";
+import { Link } from "react-router-dom";
 
 function BackToHome() {
   return (
     <>
-      <div className="button">Back To Home</div>
+      <Link to='/' className="button">Back To Home</Link>
     </>
   );
 }
