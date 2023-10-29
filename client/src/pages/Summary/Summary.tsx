@@ -152,7 +152,7 @@ const Summary = () => {
     .then((data) => setUser(data.result))
     .catch((error) => console.log("Getting error", error));
     ;
-    console.log(user)
+    // console.log(user)
 
   } catch (error) {
       console.error(error);

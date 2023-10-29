@@ -11,7 +11,7 @@ interface FormData {
 
 async function LoginReq({ sid, password }: FormData): Promise<any> {
   const credentials = { sid, password };
-  console.log(credentials);
+//   console.log(credentials);
 
     try {
         const response = await fetch('http://127.0.0.1:4000/auth/login' , {
@@ -27,8 +27,8 @@ async function LoginReq({ sid, password }: FormData): Promise<any> {
     }
 
     const data = await response.json();
-    console.log("data");
-    console.log(data);
+    console.log("loh in dai laew");
+    // console.log(data);
     return data;
   } catch (error) {
     console.error("Error:", error);

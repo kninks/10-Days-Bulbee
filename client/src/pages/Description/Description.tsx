@@ -7,7 +7,7 @@ const Description = () => {
   const handleBuyNowClick = () => {
     const token = window.localStorage.getItem("access_token")
     if (!token) {
-      alert("ok")
+      alert("please sign in")
     } else {
       alert("kk")
       navigate(`/summary?id=${id}&count=${count}`);
