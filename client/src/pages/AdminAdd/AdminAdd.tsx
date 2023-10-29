@@ -16,7 +16,7 @@ const AdminAdd = () => {
     const [file, setFile] = useState()
     const [product, setProduct] = useState('')
     const [description, setDescription] = useState('')
-    const [selectedOption, setSelectedOption] = useState<string>('Beauty');
+    const [selectedOption, setSelectedOption] = useState<string>('select an option');
     const [quantity, setQuantity] = useState(0)
     const [price, setPrice] = useState(0)
     const [images, setImages] = useState<string[]>([]);
@@ -85,11 +85,11 @@ const AdminAdd = () => {
         <div className='product-title'>
             Product Name
         </div>
-            <input type='text' name='product' className='name-input' value={product} onChange={handleInputChange} placeholder='name'></input>
+            <input type='text' name='product' className='name-input' value={product} onChange={handleInputChange} placeholder='name' required></input>
         <div className='product-title'>
             Description
         </div>
-            <textarea name='description' className='description-input' value={description} onChange={handleInputChange} placeholder='description'></textarea>
+            <textarea name='description' className='description-input' value={description} onChange={handleInputChange} placeholder='description' required></textarea>
         <div className='product-title'>
             Category
         </div>
@@ -107,15 +107,15 @@ const AdminAdd = () => {
             </div>
         </div>
         <div className='input-container'>
-            <input type='text' name='quantity' className='two-input left2' value={quantity} onChange={handleInputChange} placeholder='quantity'></input>
-            <input type='text' name='price' className='two-input right2' value={price} onChange={handleInputChange} placeholder='price'></input>
+            <input type='text' name='quantity' className='two-input left2' value={quantity} onChange={handleInputChange} placeholder='quantity' required></input>
+            <input type='text' name='price' className='two-input right2' value={price} onChange={handleInputChange} placeholder='price' required></input>
         </div>
         <div className='product-title'>
             Image
         </div>
 
         <div className='product-title'>
-              <input onChange={fileSelected} type="file" accept="image/*" className='choose-file'></input>
+              <input onChange={fileSelected} type="file" accept="image/*" className='choose-file' required></input>
 
             { images.map( image => (
               <div key={image}>
