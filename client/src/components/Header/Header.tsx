@@ -7,10 +7,11 @@ const Header = () => {
 
   const [bulb, setBulb] = useState(0);
 
+  // Get user
   useEffect(() => {
     try {
       const token = window.localStorage.getItem("access_token")
-      const response = fetch(`http://127.0.0.1:4000/auth/get_user` , {
+      const response = fetch(`http://127.0.0.1:4000/auth/get_bulb` , {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -18,6 +19,7 @@ const Header = () => {
             },
       })
       .then((res) => res.json())
+      // .then((data) => console.log(data))
       .then((data) => setBulb(data.result))
       .catch((error) => console.log("Getting error", error));
       ;   

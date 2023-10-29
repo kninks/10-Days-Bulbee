@@ -121,40 +121,43 @@ const Summary = () => {
   }, []);
 
   //get user data ------------------------------------------
-  const userSid = { param: sid };
-  const queryParam2 = new URLSearchParams(userSid).toString();
 
   const [user, setUser] = useState<{
     first_name: string;
     last_name: string;
+    sid: string;
+    phone_number: string;
     address: string;
     postal_code: string;
-    phone_number: string;
   }>({
     first_name: "",
     last_name: "",
+    sid: "",
+    phone_number: "",
     address: "",
     postal_code: "",
-    phone_number: "",
   });
 
-  useEffect(() => {
-    let isRun = false;
-
-    fetch(`http://localhost:4000/auth/get_one?${queryParam2}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  try {
+    const token = window.localStorage.getItem("access_token")
+    fetch(`http://127.0.0.1:4000/auth/get_user` , {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          },
     })
-      .then((res) => res.json())
-      .then((data) => setUser(data))
-      .catch((error) => console.log("Getting error", error));
+    .then((res) => res.json())
+    // .then((data) => console.log(data.result))
+    .then((data) => setUser(data.result))
+    .catch((error) => console.log("Getting error", error));
+    ;
+    console.log(user)
 
-    return () => {
-      isRun = true;
-    };
-  }, []);
+  } catch (error) {
+      console.error(error);
+      // Handle error state here
+  }
 
   //set total cost ------------------------------------------
   useEffect(() => {

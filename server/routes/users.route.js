@@ -1,14 +1,23 @@
 import express from 'express';
 const route = express.Router();
-import { verifyJWT, get_user ,get_all_user, register, login, logout } from '../controllers/users.js'
+import { verifyJWT, get_bulb, get_user ,get_all_user, register, login, logout } from '../controllers/users.js'
+
+route.get('/get_bulb', verifyJWT, async (req, res) => {
+    try {
+
+        const foundBulb = await get_bulb(req);
+        return res.json(foundBulb);
+    } catch (error) {
+        return res.json({ status: false, result: error });
+    }
+})
 
 route.get('/get_user', verifyJWT, async (req, res) => {
     try {
 
-        const foundUsers = await get_user(req.body.id);
-        // console.log(foundUsers)
+        const foundUser = await get_user(req);
         
-        return res.json(foundUsers);
+        return res.json(foundUser);
     } catch (error) {
         return res.json({ status: false, result: error });
     }

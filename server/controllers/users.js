@@ -13,7 +13,7 @@ const db = client.db('usersDB');
 const userCollection = db.collection('user');
 const infoCollection = db.collection('info')
 
-export function verifyJWT(req, res, next) {
+export async function verifyJWT(req, res, next) {
     const authHeader = req.headers['authorization'];
     if (!authHeader) {
         return {status: false, result: 'unauthorized'}
@@ -27,27 +27,43 @@ export function verifyJWT(req, res, next) {
             if (err) {
                 return {status: false, result: '403 forbidden'}; //invalid token
             }
-            console.log("decoded")
-            console.log(decoded)
-            req.body.id = decoded.id;
+            // console.log("decoded")
+            // console.log(decoded)
+            req.body.sid = decoded.sid;
             next();
         }
     )
 }
 
+export async function get_bulb(req) {
+    try {
+        // console.log("get_bulb")
+        // console.log(req.body.sid)
+        const bulb = await infoCollection.findOne({sid: req.body.sid})
+        console.log({ status: true, result: bulb.bulb })
+
+        return { status: true, result: bulb.bulb }
+    } catch (error) {
+        return { status: false, result: error }
+    }
+}
+
 export async function get_user(req) {
     try {
         // console.log("get_user req")
-        // console.log(req)
-        const objectId = new ObjectId(req);
+        // console.log(req.body.sid)
+        const user = await userCollection.findOne({sid: req.body.sid})
+        const res = {
+            first_name: user.first_name,
+            last_name: user.last_name,
+            sid: user.sid,
+            phone_number: user.phone_number,
+            address: user.address,
+            postal_code: user.postal_code,
+        }
+        console.log({ status: true, result: res })
 
-        const user = await userCollection.findOne({ _id: objectId })
-        const bulb = await infoCollection.findOne({sid: user.sid})
-        // console.log("user")
-        console.log({ status: true, result: bulb.bulb })
-        // console.log(user)
-
-        return { status: true, result: bulb.bulb }
+        return { status: true, result: res }
     } catch (error) {
         return { status: false, result: error }
     }
@@ -125,7 +141,7 @@ export async function login(req, res) {
 
         // Create JWTs
         const accessToken = await jwt.sign(
-            {id:existedUser._id}, 
+            {sid:existedUser.sid}, 
             process.env.ACCESS_TOKEN_SECRET,
         );
 
