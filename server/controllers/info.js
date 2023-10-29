@@ -8,7 +8,7 @@ export async function insert_discount(req) {
         const database = client.db('usersDB')
         const col = database.collection('info')
 
-        const user = await col.insertOne({ sid: req.sid, discount: ["universal"], bulb: 10000})
+        const user = await col.insertOne({ sid: req.sid, discount: [{code: 'universal', amount: 50}, {code: 'massive', amount: 1000}], bulb: 10000})
 
         return user
     } catch(error) {
@@ -21,26 +21,28 @@ export async function discount_code(req) {
         const database = client.db('usersDB');
         const col = database.collection('info');
 
-        // const idUser = await col.insertOne({discount_code: req.textData})
-
         const ref = { sid: req.sid }
-        const check = { sid: req.sid, discount: req.textData }
 
-        const existed = col.findOne(check)
+        const existed = await col.findOne({ sid: req.sid }, { projection: {_id: 0}})
+        // console.log('existed', existed)
+        // console.log('discount array', existed.discount)
 
-        if (existed) {
-            const discount = await col.updateOne(ref, {$pull: {discount: req.textData}})
-
-            if (discount.modifiedCount === 1) {
-                console.log('Discounted Succesfully')
-            } else {
-                console.log('Failed to discount')
+        for (const data of existed.discount) {
+            if (data.code === req.code) {
+                const _out = { "amount": data.amount}
+                // console.log('out', _out)
+                const remove = await col.updateOne(ref, {$pull: {discount: data}})
+                if (remove.modifiedCount === 1) {
+                    console.log('Discounted Succesfully')
+                } else {
+                    console.log('Failed to discount')
+                }
+                return _out
             }
-        } else {
-            console.log('Discount doesnt existed')
         }
+        console.log('Discount doesnt exist')
         
-        return existed
+        return 0
     } catch(error) {
         return { status: false, result: error}
     }

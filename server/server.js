@@ -16,7 +16,7 @@ import info_routes from '../server/routes/info.route.js'
 import users_routes from '../server/routes/users.route.js'
 
 app.use('/products', products_routes)
-app.use(info_routes)
+app.use('/info', info_routes)
 app.use('/auth', users_routes)
 
 app.use((err, req, res, next) => {
