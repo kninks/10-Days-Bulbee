@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { MongoClient } from 'mongodb';
-
-// import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
-// import { MongoClient } from 'mongodb';
+import { ObjectId } from 'mongodb';
+import dotenv from 'dotenv';
 
 const url = 'mongodb+srv://bupbee:bulbeepassword@bulbeedb.oqjikje.mongodb.net/?retryWrites=true&w=majority'
 const client = new MongoClient(url)
@@ -13,16 +11,43 @@ client.connect();
 
 const db = client.db('usersDB');
 const userCollection = db.collection('user');
+const infoCollection = db.collection('info')
 
-export async function get_one_user(req) {
+export function verifyJWT(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+        return {status: false, result: 'unauthorized'}
+    };
+    console.log(authHeader)
+    const token = authHeader.split(' ')[1]
+    jwt.verify(
+        token,
+        process.env.ACCESS_TOKEN_SECRET,
+        (err, decoded) => {
+            if (err) {
+                return {status: false, result: '403 forbidden'}; //invalid token
+            }
+            console.log("decoded")
+            console.log(decoded)
+            req.body.id = decoded.id;
+            next();
+        }
+    )
+}
+
+export async function get_user(req) {
     try {
-        const ref = { sid: req }
-        const user = collection.findOne(ref, { projection: { _id: 0}})
-        // console.log(user)
+        console.log("get_user req")
+        console.log(req)
+        const objectId = new ObjectId(req);
+
+        const user = await userCollection.findOne({ _id: objectId })
+        console.log("user")
+        console.log(user)
 
         return user
     } catch (error) {
-        return { status: false, result: error}
+        return { status: false, result: error }
     }
 }
 
@@ -37,60 +62,95 @@ export async function get_all_user(req) {
     } catch (error) {
         console.log("Some error occur!");
         console.log(error);
-        return { status: false, result: error}
+        return { status: false, result: error }
     }
 }
 
 export async function register(req) {
     try {
         let newUser = req.body;
-        const existedUser = await userCollection.findOne({sid:newUser.sid});
+        const duplicate = await userCollection.findOne({sid:newUser.sid});
 
-        if (existedUser) {
+        if (duplicate) {
             console.log("User already exists!");
-            return { message: "User already exists!"};
+            return { status: false, result: "User already exists!"};
         } else {
-            const salt = await bcrypt.genSalt();
-            const hashedPassword = await bcrypt.hash(newUser.password, salt);
+            const hashedPassword = await bcrypt.hash(newUser.password, 10);
     
             newUser.password = hashedPassword;
             console.log(newUser);
 
             const insertedUser = await userCollection.insertOne(newUser);
-            console.log(insertedUser);
+            
+            const insertUserInfo = await infoCollection.insertOne({ sid: newUser.sid, discount: [{code: 'universal', amount: 50}, {code: 'massive', amount: 1000}], bulb: 10000})
 
-            return insertedUser;
+            if (insertedUser.acknowledged && insertUserInfo.acknowledged) {
+                return { status: true, result: "Successful laew" };
+            } else {
+                console.log("insertedUser")
+                console.log(insertedUser)
+                console.log("insertedUserInfo")
+                console.log(insertedUserInfo)
+                return { status: false, result: "Some error occure" };
+            }
+
+            
         }
     } catch (error) {
         console.log("Some error occur!");
         console.log(error);
-        return { message: "Some error occur!" };
+        return { status: false, result: "Some error occur!" };
     }
 }
 
-export async function login(req) {
+export async function login(req, res) {
     try {
         const user = req.body;
         const existedUser = await userCollection.findOne({sid: user.sid});
 
         if (!existedUser) {
             console.log("User doesn't exist!");
-            return { message: "User doesn't exist!"};
+            return { status: false, result: "User doesn't exist!"};
         }
 
-        const isPasswordValid = await bcrypt.compare(user.password, existedUser.password);
+        //User exists
+        const match = await bcrypt.compare(user.password, existedUser.password);
         
-        if (!isPasswordValid) {
-            console.log("Username or Password is incorrect!");
-            return { message: "Username or Password is incorrect!" };
+        if (!match) {
+            console.log("Student ID or password is incorrect!");
+            return { status: false, result: "Student ID or password is incorrect!" };
         }
 
-        const token = await jwt.sign({id:existedUser._id}, "bulbee");
+        // Create JWTs
+        const accessToken = await jwt.sign(
+            {id:existedUser._id}, 
+            process.env.ACCESS_TOKEN_SECRET,
+            // {expiresIn: '20m'}
+        );
+        // const refreshToken = await jwt.sign(
+        //     {id:existedUser._id}, 
+        //     process.env.REFRESH_TOKEN_SECRET,
+        //     {expiresIn: '1d'}
+        // );
+
+        // Save refreshToken to the current user
+        // userCollection.updateOne({sid: existedUser.sid}, {
+        //     $set: {
+        //         refreshToken: refreshToken
+        //     },
+        // })
         console.log("Login successful!");
-        return {token, sid: existedUser.sid};
+        return {status: true, accessToken};
     } catch (error) {
         console.log("Some error occur!");
         console.log(error);
-        return { message: "Some error occur!" };
+        return { status: false, result: "Some error occur!" };
     }
+}
+
+export async function logout(req, res) {
+
+    console.log(req.body)
+
+    return {status: true, result: 'loged out'}
 }

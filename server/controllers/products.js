@@ -42,7 +42,7 @@ export async function get_product(req) {
         // console.log(desc) 
         return desc
     } catch(error) {
-        return { status: false, result: error} 
+        return { status: false, result: error } 
     }
 }
 

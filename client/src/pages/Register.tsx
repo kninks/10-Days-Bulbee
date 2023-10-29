@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './Auth.css'
 
@@ -49,6 +49,7 @@ function Register() {
         password: "",
     });
     const [tryAgain, setTryAgain] = useState("no")
+    const navigate = useNavigate();
     
     const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
@@ -63,8 +64,14 @@ function Register() {
 
         try {
             const response = await RegisterReq(formData);
-            console.log("response");
             console.log(response);
+
+            if (response.status) {
+                alert(response.result)
+                navigate('/login')
+            } else {
+                setTryAgain(response.result)
+            }
         } catch (error) {
             console.error('Error:', error);
         }

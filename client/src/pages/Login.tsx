@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie';
 import AuthContext from '../context/AuthProvider';
 
 import './Auth.css'
@@ -44,7 +44,7 @@ function Login() {
         password: "",
     });
     const [tryAgain, setTryAgain] = useState("no")
-    const [_, setCookies] = useCookies(["access_token"]);
+    const [cookie, setCookies] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
     const { setAuth } = useContext(AuthContext);
@@ -62,10 +62,15 @@ function Login() {
 
         try {
             const response = await LoginReq(formData);
-            console.log(response)
-            setCookies("access_token", response.token);
-            window.sessionStorage.setItem("sid", response.sid);
-            navigate("/home")
+            if (response.status) {
+                setTryAgain(" ");
+                console.log(response)
+                window.localStorage.setItem("access_token", response.accessToken);
+                navigate("/home")
+            } else {
+                setTryAgain(response.result);
+            }
+            
             // if ("access_token" in response) {
             //     setCookies("access_token", response.token);
             //     window.localStorage.setItem("sid", response.sid);
@@ -86,6 +91,23 @@ function Login() {
             console.error(error);
             // Handle error state here
         }
+    }
+
+    const handleLogout = async () => {
+        const response = await fetch('http://127.0.0.1:4000/auth/logout' , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // credentials: 'include',
+            body: JSON.stringify({accessToken: window.localStorage.getItem("access_token")})
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        // Assuming the logout was successful, clear the localStorage and cookies
+        window.localStorage.removeItem('access_token');
     }
     return (
         <div>
@@ -127,8 +149,9 @@ function Login() {
 
                 </div>
             </form>
-
-            
+            <button onClick={handleLogout}>
+                Logout
+            </button>
         </div>
     )
 }

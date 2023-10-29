@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './Description.css';
-import useSwr from "swr"
 
 const Description = () => {
   const navigate = useNavigate();
