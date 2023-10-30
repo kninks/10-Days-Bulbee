@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import './Header.css'
-
-
 
 const Header = () => {
 
@@ -22,16 +21,13 @@ const Header = () => {
       // .then((data) => console.log(data))
       .then((data) => setBulb(data.result))
       .catch((error) => console.log("Getting error", error));
-      ;   
-      
     } catch (error) {
         console.error(error);
-        // Handle error state here
     }
   },[bulb])
 
-  const userSid = { param: "6438888821" };
-  const queryParam2 = new URLSearchParams(userSid).toString();
+  // const userSid = { param: "6438888821" };
+  // const queryParam2 = new URLSearchParams(userSid).toString();
 
 
   // useEffect(() => {
@@ -55,7 +51,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="profile">
-        <img src="/profile-icon.png" className="profile" />
+        <Link to='/login'><img src="/profile-icon.png" className="profile" /></Link>
       </div>
       <div className='bulbee-logo'>
         <p>Bulbee</p>

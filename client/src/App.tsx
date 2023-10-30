@@ -16,7 +16,7 @@ import FoodDrinksPage from './pages/Product/FoodDrinksPage';
 
 function App() {
   const navigate = useNavigate();
-  const pathsWithoutHeader = ['/login', '/register'];
+  const pathsWithoutHeader = ['/login', '/register', '/adminadd'];
   const isHeaderVisible = !pathsWithoutHeader.includes(window.location.pathname);
 
   return (

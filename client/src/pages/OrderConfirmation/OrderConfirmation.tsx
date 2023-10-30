@@ -14,11 +14,12 @@ function OrderConfirmation() {
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const id = params.get("id")
   const count = parseInt(params.get("count") || "0", 10); // Parse the count from URL or default to 0.
   const total = parseInt(params.get("total") || "0", 10)
 
-  const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
-  const queryParam = new URLSearchParams(productId).toString();
+  // const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
+  // const queryParam = new URLSearchParams(productId).toString();
 
   const [product, setProduct] = useState<{
     name: string;
@@ -31,7 +32,10 @@ function OrderConfirmation() {
   useEffect(() => {
     let isRun = false;
 
-    fetch(`http://localhost:4000/products/get?${queryParam}`, {
+    const queryParam = `param=${id}`;
+    const searchParams = new URLSearchParams(queryParam);
+
+    fetch(`http://localhost:4000/products/get?${searchParams}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

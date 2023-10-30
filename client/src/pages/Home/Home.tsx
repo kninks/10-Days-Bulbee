@@ -37,10 +37,10 @@ const Home = () => {
       </div>
       <div className="category-section">
         <div className="category">
-          <Link to='/product-page'><Category category="All Products" items={150} /></Link>
-          <Link to='/fashion-page' ><Category category="Fashion" items={30} /></Link>
-          <Link to='beauty-page'><Category category="Beauty" items={50}  /></Link>
-          <Link to='/fooddrinks-page'><Category category="Food & Drinks" items={70}  /></Link>
+          <Link to='/product-page'><Category category="All Products" items={150} imageSrc='/pexels-markus-winkler-12081286.jpg'/></Link>
+          <Link to='/fashion-page' ><Category category="Fashion" items={30} imageSrc='/pexels-markus-winkler-3812433.jpg' /></Link>
+          <Link to='beauty-page'><Category category="Beauty" items={50} imageSrc='/pexels-mister-mister-2442898.jpg' /></Link>
+          <Link to='/fooddrinks-page'><Category category="Food & Drinks" items={70}imageSrc='/pexels-kader-d-kahraman-15564188.jpg' /></Link>
         </div>
       </div>
     </div>
