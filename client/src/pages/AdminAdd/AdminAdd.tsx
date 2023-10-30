@@ -45,6 +45,7 @@ const AdminAdd = () => {
                 });
 
                 if (response.data.status) {
+                  alert("Upload Successful")
                   setProduct('');
                   setDescription('');
                   setSelectedOption('select an option');

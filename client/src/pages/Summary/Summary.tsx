@@ -8,7 +8,8 @@ const Summary = () => {
   const [shipping, setShipping] = useState(45);
   const [total, setTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
-  const sid = "6660115021";
+  const [discountapplied, setDiscountapplied] = useState(false)
+  const sid = "6438888821";
   // const id = "46ca6f33-cd6d-44a7-8078-0bd4e33e420d";
 
   const location = useLocation();
@@ -43,7 +44,7 @@ const Summary = () => {
         );
         const data2 = await response2.json();
         if (data2.status) {
-          navigate(`/confirm?count=${count}&total=${total}`);
+          navigate(`/confirm?id=${id}&count=${count}&total=${total}`);
         } else {
           console.log("Error occur");
         }
@@ -58,6 +59,10 @@ const Summary = () => {
 
   //deal with discount ------------------------------------------
   const handleSubmit = async () => {
+    if (discountapplied) {
+      alert("You can use discount only once!")
+      return;
+    }
     try {
       const response = await fetch("http://localhost:4000/info/submit", {
         method: "POST",
@@ -72,6 +77,7 @@ const Summary = () => {
         console.log(data);
         console.log(data.amount);
         setDiscount(data.amount);
+        setDiscountapplied(true)
       } else {
         console.error("Request failed with status: " + response.status);
       }
@@ -163,14 +169,19 @@ const Summary = () => {
   useEffect(() => {
     const calSub: number = parseFloat(product.bulb_price) * count;
     const calculate: number = parseFloat(calSub) + shipping - discount;
-    setTotal(calculate);
     setSubtotal(calSub);
+
+    if (calculate > 0) {
+      setTotal(calculate);
+    } else {
+      setTotal(0)
+    }
   }, [discount, product.bulb_price, shipping]);
 
   return (
     <div>
-      <Link to="/description">
-        <div className="back-link">Back</div>
+      <Link to={`/description?id=${id}`} className="back-link">
+        Back
       </Link>
 
       <div className="detail-area">
