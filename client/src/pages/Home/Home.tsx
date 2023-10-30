@@ -39,8 +39,8 @@ const Home = () => {
         <div className="category">
           <Link to='/product-page'><Category category="All Products" items={150} /></Link>
           <Link to='/fashion-page' ><Category category="Fashion" items={30} /></Link>
-          <Link to='beauty-page'><Category category="Beauty" items={50}  /></Link>
-          <Link to='/fooddrinks-page'><Category category="Food & Drinks" items={70}  /></Link>
+          <Link to='beauty-page'><Category category="Beauty" items={50} /></Link>
+          <Link to='/fooddrinks-page'><Category category="Food & Drinks" items={70} /></Link>
         </div>
       </div>
     </div>

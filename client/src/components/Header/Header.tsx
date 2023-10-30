@@ -19,11 +19,8 @@ const Header = () => {
       .then((res) => res.json())
       .then((data) => setBulb(data.result))
       .catch((error) => console.log("Getting error", error));
-      ;   
-      
     } catch (error) {
         console.error(error);
-        // Handle error state here
     }
   },[bulb])
 
