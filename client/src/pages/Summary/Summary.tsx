@@ -82,6 +82,7 @@ const Summary = () => {
         const data2 = await response2.json();
         if (data2.status) {
           navigate(`/confirm?id=${id}&count=${count}&total=${total}`);
+          window.location.reload();
         } else {
           console.log("Error occur");
         }
