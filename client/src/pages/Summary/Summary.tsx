@@ -3,7 +3,6 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./Summary.css";
 
 const Summary = () => {
-
   const [code, setCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [shipping, setShipping] = useState(45);
@@ -14,7 +13,7 @@ const Summary = () => {
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const id = params.get("id")
+  const id = params.get("id");
   const count = parseInt(params.get("count") || "0", 10); // Parse the count from URL or default to 0.
 
   //link to confirmation page and update bulbb ------------------------------------------
@@ -29,25 +28,28 @@ const Summary = () => {
         body: JSON.stringify({ total, sid }),
       });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (data.status) {
-        const response2 = await fetch("http://localhost:4000/products/update_quantity", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ count, id }),
-      })
+        const response2 = await fetch(
+          "http://localhost:4000/products/update_quantity",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ count, id }),
+          }
+        );
         const data2 = await response2.json();
         if (data2.status) {
           navigate(`/confirm?count=${count}&total=${total}`);
         } else {
-          console.log('Error occur')
+          console.log("Error occur");
         }
       } else {
         // console.log("Not enough bulb");
-        return alert('Not enough bulb')
+        return alert("Not enough bulb");
       }
     } catch (error) {
       console.error("Error sending text data:", error);
@@ -139,24 +141,22 @@ const Summary = () => {
   });
 
   try {
-    const token = window.localStorage.getItem("access_token")
-    fetch(`http://127.0.0.1:4000/auth/get_user` , {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-          },
+    const token = window.localStorage.getItem("access_token");
+    fetch(`http://127.0.0.1:4000/auth/get_user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .then((res) => res.json())
-    // .then((data) => console.log(data.result))
-    .then((data) => setUser(data.result))
-    .catch((error) => console.log("Getting error", error));
-    ;
+      .then((res) => res.json())
+      // .then((data) => console.log(data.result))
+      .then((data) => setUser(data.result))
+      .catch((error) => console.log("Getting error", error));
     // console.log(user)
-
   } catch (error) {
-      console.error(error);
-      // Handle error state here
+    console.error(error);
+    // Handle error state here
   }
 
   //set total cost ------------------------------------------
@@ -169,89 +169,87 @@ const Summary = () => {
 
   return (
     <div>
-      <Link to="/description" className="back-link">
-        Back
+      <Link to="/description">
+        <div className="back-link">Back</div>
       </Link>
-      <div className="order-summary">Order Summary</div>
 
-      <div>
-        <img
-          src={product.picture_url}
-          alt="Product Image"
-          className="product-image"
-          style={{ width: "30%", height: "30%" }}
-        />
-        <div className="product-description">
-          <div className="product-name">{product.name}</div>
-          <div className="coount-item"> {count} item</div>
-          <div className="product-bulb">
-            {product.bulb_price}
+      <div className="detail-area">
+        <h2 className="order-summary">Order Summary</h2>
+        <div className="order-detail-box">
+          <div className="product-img">
+            <img
+              src={product.picture_url}
+              alt="Product Image"
+              className="product-image"
+            />
+          </div>
+          <p className="product-name">{product.name}</p>
+          <div className="product-items"> {count} Item</div>
+          <div className="product-price">
+            <p>{product.bulb_price}</p>
             <img src="light-bulb.png" className="bulb-png" />
           </div>
         </div>
-      </div>
 
-      <div className="head-sub">Discount Code</div>
-      <div className="discount-container">
-        <input
-          type="text"
-          value={code}
-          onChange={(e: any) => setCode(e.target.value)}
-          className="discount-text"
-        />
-        <button className="discount-button" onClick={handleSubmit}>
-          Apply
-        </button>
-      </div>
+        <div className="divider"></div>
 
-      <div className="seperate-line"></div>
-
-      <div className="head-sub">Payment</div>
-      <div className="text-both">
-        <div className="text-both-sub">Payment subtotal</div>
-        <div className="text-both-sub">{subtotal}</div>
-      </div>
-      <div className="text-both">
-        <div className="text-both-sub">Shipping</div>
-        <div className="text-both-sub">{shipping}</div>
-      </div>
-      <div className="text-both">
-        <div className="text-both-sub">Discount</div>
-        <div className="text-both-sub">-{discount}</div>
-      </div>
-      <div className="total-payment">
-        <div className="total-payment-left">Total Payment</div>
-        <div className="total-payment-right">
-          {total}
-          <img src="light-bulb.png" className="bulb-png2" />
-        </div>
-      </div>
-
-      <div className="seperate-line"></div>
-
-      <div className="head-sub">Delivery Address</div>
-      <div className="detail">
-        {user.first_name} {user.last_name} ({user.phone_number})
-      </div>
-      <div className="detail">
-        {user.address}
-        {user.postal_code}
-      </div>
-
-      <div className="seperate-line"></div>
-
-      <div className="head-sub">Additional Note</div>
-      <textarea className="additional-box" />
-
-      <div className="footer">
-        <div className="button-container">
-          <button className="confirm-button" onClick={handleConfirmClick}>
-            Confirm
+        <div className="subheader">Discount Code</div>
+        <div className="discount-container">
+          <input
+            type="text"
+            value={code}
+            onChange={(e: any) => setCode(e.target.value)}
+            className="discount-input"
+          />
+          <button className="discount-button" onClick={handleSubmit}>
+            Apply
           </button>
         </div>
-        <div className="back-link">
-          <Link to="/description">Cancel Order</Link>
+
+        <div className="divider"></div>
+
+        <div className="subheader">Payment</div>
+        <div className="payment-section">
+          <div className="subtotal-text">Payment subtotal</div>
+          <div className="subtotal-price">{subtotal}</div>
+          <div className="subtotal-text">Shipping</div>
+          <div className="subtotal-price">{shipping}</div>
+          <div className="subtotal-text">Discount</div>
+          <div className="subtotal-price">-{discount}</div>
         </div>
+        <div className="total-payment">
+          <div className="total-payment-left">Total Payment</div>
+          <div className="total-payment-right">
+            {total}
+            <img src="light-bulb.png" className="bulb-png2" />
+          </div>
+        </div>
+
+        <div className="divider"></div>
+
+        <div className="subheader">Delivery Address</div>
+        <div className="delivery-detail">
+          <div className="delivery-address">
+            {user.first_name} {user.last_name} ({user.phone_number})<br />
+            {user.address}
+            <br />
+            {user.postal_code}
+          </div>
+        </div>
+
+        <div className="divider"></div>
+
+        <div className="subheader">Additional Note</div>
+        <textarea className="additional-box" />
+      </div>
+
+      <div className="button-area">
+        <button className="confirm-button" onClick={handleConfirmClick}>
+          Confirm
+        </button>
+        <Link to="/description" className="link-container">
+          <div className="cancel-link">Cancel Order</div>
+        </Link>
       </div>
     </div>
   );
