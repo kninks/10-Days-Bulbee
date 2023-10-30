@@ -13,6 +13,7 @@
     background: #FFFDFD;
     display: flex;
     position: relative;
+    flex-direction: column;
 }
 
 .category-img > img {
@@ -25,10 +26,10 @@
 .text-area {
     width: 167px;
     height: 40px;
-    border-top: 1px solid #C8D0CE;
-    margin-top: 89px;
+    margin-top: -4px;
     display: grid;
-    grid-template-columns: 100px 1px 66px
+    grid-template-columns: 100px 1px auto;
+    grid-auto-flow: column;
 }
 
 .category-name {
