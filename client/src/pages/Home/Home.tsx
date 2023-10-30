@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Category from "../../components/Category/Category";
 import './Home.css'
 import { Link } from 'react-router-dom';
@@ -7,7 +8,28 @@ const Home = () => {
 //     <div className="category">
 //       <Link to={path}>{category}</Link>
 // ]    </div>
-//   );
+  //   );
+  // Get user
+  const [bulb, setBulb] = useState(0);
+  useEffect(() => {
+    try {
+      const token = window.localStorage.getItem("access_token")
+      // console.log(token)
+      const response = fetch(`http://127.0.0.1:4000/auth/get_bulb` , {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+      })
+      .then((res) => res.json())
+      // .then((data) => console.log(data))
+      .then((data) => setBulb(data.result))
+      .catch((error) => console.log("Getting error", error));
+    } catch (error) {
+        console.error(error);
+    }
+  },[bulb])
 
   return (
     <div className="homepage">
@@ -24,7 +46,7 @@ const Home = () => {
         <div className="my-bulb">
           <img src="/light-bulb.png" className="bulb-icon" />
           <h3>Balance</h3>
-          <h2>10,000</h2>
+          <h2>{bulb}</h2>
         </div>
         <div className="my-purchase">
           <img src="/shopping-bag.png" className="bag-icon" />

@@ -74,7 +74,6 @@ const Summary = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         console.log(data.amount);
         setDiscount(data.amount);
         setDiscountapplied(true)
@@ -258,7 +257,7 @@ const Summary = () => {
         <button className="confirm-button" onClick={handleConfirmClick}>
           Confirm
         </button>
-        <Link to="/description" className="link-container">
+        <Link to="/" className="link-container">
           <div className="cancel-link">Cancel Order</div>
         </Link>
       </div>
