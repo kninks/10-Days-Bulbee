@@ -4,13 +4,14 @@ import "./Category.css";
 interface Props {
   category: string;
   items: number;
+  imageSrc: string;
 }
 
-const Category = ({category, items}: Props) => {
+const Category = ({category, items, imageSrc}: Props) => {
   return (
     <div className="category-box">
       <div className="category-img">
-        <img />
+        <img src={imageSrc} alt={category} />
       </div>
       <div className="text-area">
         <div className="category-name">
