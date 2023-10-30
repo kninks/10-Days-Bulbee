@@ -40,7 +40,7 @@ export async function get_bulb(req) {
         // console.log("get_bulb")
         // console.log(req.body.sid)
         const bulb = await infoCollection.findOne({sid: req.body.sid})
-        console.log({ status: true, result: bulb.bulb })
+        // console.log({ status: true, result: bulb.bulb })
 
         return { status: true, result: bulb.bulb }
     } catch (error) {
