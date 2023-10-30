@@ -15,6 +15,13 @@
     position: relative;
 }
 
+.category-img > img {
+    width: 167px;
+    height: auto;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
 .text-area {
     width: 167px;
     height: 40px;
