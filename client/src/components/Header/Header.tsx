@@ -30,6 +30,7 @@ const Header = () => {
   
   const handleLogout = () => {
     window.localStorage.removeItem("access_token");
+    alert("logged out");
     navigate('/login')
   }
 
