@@ -27,7 +27,7 @@ export async function add_product(req) {
             quantity: req.quantity
         })
 
-        return product
+        return { status: true, result: product}
     } catch(error) {
         return { status: false, result: error}
     }
@@ -42,7 +42,7 @@ export async function get_product(req) {
         // console.log(desc) 
         return desc
     } catch(error) {
-        return { status: false, result: error} 
+        return { status: false, result: error } 
     }
 }
 
@@ -62,7 +62,7 @@ export async function get_all_products() {
 export async function get_products_by_category(category) {
     try {
         const database = client.db('productsDB');
-        const col = database.collection('product');
+        const col = database.collection('admin');
         const products = await col.find({ category: category }).toArray();
         return products;
     } catch (error) {

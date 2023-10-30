@@ -1,28 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import "./Description.css";
-// import useSwr from "swr"
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
+import './Description.css';
 
 const Description = () => {
   const navigate = useNavigate();
   const handleBuyNowClick = () => {
-    if (count > 0) {
-    navigate(`/summary?count=${count}`);
+    const token = window.localStorage.getItem("access_token")
+    if (!token) {
+      alert("please sign in")
     } else {
-      alert('Quantity number must be selected')
+      alert("kk")
+      navigate(`/summary?id=${id}&count=${count}`);
     }
+    
   };
 
-  const productId = { param: "46ca6f33-cd6d-44a7-8078-0bd4e33e420d" };
-  const queryParam = new URLSearchParams(productId).toString();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id")
+  console.log(id)
+
+  const queryParam = `param=${id}`;
+  const searchParams = new URLSearchParams(queryParam);
+
+  // const { data, isLoading, error} = useSwr(`http://localhost:4000/product/get?${queryParam}`, () => {
+    
+  // })
 
   const [product, setProduct] = useState<{name: string, id: string, description: string, categorry: string, picture_url: string, bulb_price: number, quantity: number}>({name: "", id: "", description: "", categorry: "", picture_url: "", bulb_price: 0, quantity: 0});
 
   useEffect(() => {
     let isRun = false;
 
-    fetch(`http://localhost:4000/products/get?${queryParam}`, {
-      method: "GET",
+    fetch(`http://localhost:4000/products/get?${searchParams}`, {
+      method: 'GET',
       headers: {
         "Content-Type": "application/json",
       },

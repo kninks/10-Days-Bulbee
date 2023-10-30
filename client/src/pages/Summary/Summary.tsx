@@ -9,10 +9,11 @@ const Summary = () => {
   const [total, setTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const sid = "6660115021";
-  const id = "46ca6f33-cd6d-44a7-8078-0bd4e33e420d";
+  // const id = "46ca6f33-cd6d-44a7-8078-0bd4e33e420d";
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const id = params.get("id")
   const count = parseInt(params.get("count") || "0", 10); // Parse the count from URL or default to 0.
 
   //link to confirmation page and update bulbb ------------------------------------------
@@ -80,8 +81,10 @@ const Summary = () => {
   };
 
   //get product data ------------------------------------------
-  const productId = { param: id };
-  const queryParam = new URLSearchParams(productId).toString();
+  // const productId = { param: id };
+  // const queryParam = new URLSearchParams(productId).toString();
+  const queryParam = `param=${id}`;
+  const searchParams = new URLSearchParams(queryParam);
 
   const [product, setProduct] = useState<{
     name: string;
@@ -104,7 +107,7 @@ const Summary = () => {
   useEffect(() => {
     let isRun = false;
 
-    fetch(`http://localhost:4000/products/get?${queryParam}`, {
+    fetch(`http://localhost:4000/products/get?${searchParams}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -120,40 +123,43 @@ const Summary = () => {
   }, []);
 
   //get user data ------------------------------------------
-  const userSid = { param: sid };
-  const queryParam2 = new URLSearchParams(userSid).toString();
 
   const [user, setUser] = useState<{
     first_name: string;
     last_name: string;
+    sid: string;
+    phone_number: string;
     address: string;
     postal_code: string;
-    phone_number: string;
   }>({
     first_name: "",
     last_name: "",
+    sid: "",
+    phone_number: "",
     address: "",
     postal_code: "",
-    phone_number: "",
   });
 
-  useEffect(() => {
-    let isRun = false;
-
-    fetch(`http://localhost:4000/auth/get_one?${queryParam2}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  try {
+    const token = window.localStorage.getItem("access_token")
+    fetch(`http://127.0.0.1:4000/auth/get_user` , {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          },
     })
-      .then((res) => res.json())
-      .then((data) => setUser(data))
-      .catch((error) => console.log("Getting error", error));
+    .then((res) => res.json())
+    // .then((data) => console.log(data.result))
+    .then((data) => setUser(data.result))
+    .catch((error) => console.log("Getting error", error));
+    ;
+    // console.log(user)
 
-    return () => {
-      isRun = true;
-    };
-  }, []);
+  } catch (error) {
+      console.error(error);
+      // Handle error state here
+  }
 
   //set total cost ------------------------------------------
   useEffect(() => {
