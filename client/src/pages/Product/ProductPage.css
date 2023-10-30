@@ -3,7 +3,14 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     width: 100%;
-}  
+    justify-items: center;
+
+}
+
+.category-page {
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
 .back-link {
     width: 123px;
@@ -17,11 +24,8 @@
     display: flex;
 }
 
-.header {
-    font-family: Poppins;
+.category-header {
+    margin-left: 4px;
     font-size: 20px;
     font-weight: 700;
-    line-height: 30px;
-    letter-spacing: 0em;
-    text-align: left;
 }
