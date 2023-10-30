@@ -1,23 +1,21 @@
-.back-link {
-    display: flex;
-    width: 123px;
-    height: 20px;
-    flex-shrink: 0;
-    color: #525252;
-    font-size: 16px;
+.product-cat-title {
+    font-family: Poppins;
+    font-size: 20px;
     font-weight: 700;
-    line-height: normal;
-    text-decoration-line: underline;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 20px;
 }
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(2, 180px);
+    /* gap: 10px; */
     width: 100%;
+    /* padding-left: 2px; */
+    margin-left: 20px;
 }  
-<<<<<<< HEAD
-=======
 
 .back-link {
     width: 123px;
@@ -30,13 +28,3 @@
     text-decoration-line: underline;
     display: flex;
 }
-
-.header {
-    font-family: Poppins;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 30px;
-    letter-spacing: 0em;
-    text-align: left;
-}
->>>>>>> merge

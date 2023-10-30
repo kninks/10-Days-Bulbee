@@ -129,36 +129,22 @@ route.get('/get-by-category', async (req, res) => {
         console.log(category);
         const _out = await get_products_by_category(category);
 
-<<<<<<< HEAD
-        for (const product of productsByCategory) {
-=======
         for (const product of _out) {
->>>>>>> merge
             const params = {
                 Bucket: bucketName,
                 Key: product.picture_url
             }
-<<<<<<< HEAD
-            const command = new GetObjectCommand(params);
-            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-            console.log('aws_url', url)
-=======
     
             const command = new GetObjectCommand(params);
             const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
             // console.log('aws_url', url)
->>>>>>> merge
     
             product.picture_url = url
         }
 
-<<<<<<< HEAD
-        return res.json(productsByCategory);
-=======
         // console.log(_out)
 
         return res.json(_out);
->>>>>>> merge
     } catch(error) {
         return res.json({ status: false, message: error });
     }

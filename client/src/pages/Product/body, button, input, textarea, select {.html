@@ -1,0 +1,152 @@
+body, button, input, textarea, select {
+    font-family: 'Poppins', sans-serif;
+}
+
+.product-card {
+    border: 1px solid #e1e1e1;
+    /* padding: 10px; */
+    margin: 10px 0;
+    text-align: center;
+    height: 217px;
+    width: 167px;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+  
+.product-card img {
+    /* max-width: 100%;
+    height: auto; */
+    max-height: 167px;
+}
+
+.product-card-des {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    padding: 10px 5px 0 10px;
+    box-sizing: border-box;
+    display: flex;           /* New */
+    flex-direction: column;  /* New */
+    justify-content: flex-end; /* New */
+
+}
+
+.product-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    left: 5px;
+    text-align: left;
+    margin-bottom: 0px;
+    font-size: 13px;
+}
+
+.price-container {
+    display: flex;
+    text-align: left;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.price-number {
+    font-weight: bold;
+    margin: 0;
+}
+
+.thumbnail {
+    height: 14px;
+    width: 14px;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+
+
+
+
+
+
+----------------.product-cat-title {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 180px);
+    /* gap: 10px; */
+    width: 100%;
+    /* padding-left: 2px; */
+    margin-left: 20px;
+}  
+
+.back-link {
+    width: 123px;
+    height: 20px;
+    flex-shrink: 0;
+    color: #525252;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+    display: flex;
+}
+
+
+
+---------
+import React, { useEffect, useState } from 'react';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import { Link } from 'react-router-dom';
+
+import './ProductPage.css'
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;700&display=swap" rel="stylesheet"></link>
+
+
+const ProductPage: React.FC = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch product data from your server
+    fetch('http://localhost:4000/products/get-all')
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+       console.log(products)
+      })
+      .catch((error) => {
+        console.error('Error fetching product data:', error);
+      });
+  }, []);
+
+  return (
+    <div>
+      <Link to ='/' className='back-link'>Back</Link>
+      <div className='product-cat-title'>All Products</div>
+      <div className="product-grid">
+        {products.map((product, index) => (
+          <ProductCard
+            key={index}
+            id={product.id}
+            picture_url={product.picture_url}
+            name={`${product.name} ${index + 1}`}
+            price={product.bulb_price}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ProductPage;
